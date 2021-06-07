@@ -1407,17 +1407,18 @@ type DomainSoundAudio struct {
 }
 
 type DomainAudio struct {
-	XMLName    xml.Name               `xml:"audio"`
-	ID         int                    `xml:"id,attr"`
-	None       *DomainAudioNone       `xml:"-"`
-	ALSA       *DomainAudioALSA       `xml:"-"`
-	CoreAudio  *DomainAudioCoreAudio  `xml:"-"`
-	Jack       *DomainAudioJack       `xml:"-"`
-	OSS        *DomainAudioOSS        `xml:"-"`
-	PulseAudio *DomainAudioPulseAudio `xml:"-"`
-	SDL        *DomainAudioSDL        `xml:"-"`
-	SPICE      *DomainAudioSPICE      `xml:"-"`
-	File       *DomainAudioFile       `xml:"-"`
+	XMLName     xml.Name               `xml:"audio"`
+	ID          int                    `xml:"id,attr"`
+	TimerPeriod uint                   `xml:"timerPeriod,attr,omitempty"`
+	None        *DomainAudioNone       `xml:"-"`
+	ALSA        *DomainAudioALSA       `xml:"-"`
+	CoreAudio   *DomainAudioCoreAudio  `xml:"-"`
+	Jack        *DomainAudioJack       `xml:"-"`
+	OSS         *DomainAudioOSS        `xml:"-"`
+	PulseAudio  *DomainAudioPulseAudio `xml:"-"`
+	SDL         *DomainAudioSDL        `xml:"-"`
+	SPICE       *DomainAudioSPICE      `xml:"-"`
+	File        *DomainAudioFile       `xml:"-"`
 }
 
 type DomainAudioChannel struct {
@@ -5309,6 +5310,11 @@ func (a *DomainAudio) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			xml.Name{Local: "id"}, fmt.Sprintf("%d", a.ID),
 		})
 	}
+	if a.TimerPeriod != 0 {
+		start.Attr = append(start.Attr, xml.Attr{
+			xml.Name{Local: "timerPeriod"}, fmt.Sprintf("%d", a.TimerPeriod),
+		})
+	}
 	if a.None != nil {
 		start.Attr = append(start.Attr, xml.Attr{
 			xml.Name{Local: "type"}, "none",
@@ -5370,6 +5376,15 @@ func (a *DomainAudio) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 			return err
 		}
 		a.ID = int(idval)
+	}
+
+	period, ok := getAttr(start.Attr, "timerPeriod")
+	if ok {
+		periodval, err := strconv.ParseUint(period, 10, 32)
+		if err != nil {
+			return err
+		}
+		a.TimerPeriod = uint(periodval)
 	}
 
 	if typ == "none" {
