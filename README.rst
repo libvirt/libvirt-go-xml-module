@@ -17,6 +17,14 @@ dependency on the libvirt library itself, so this can be used regardless of
 the way in which the application talks to libvirt.
 
 
+Development status
+==================
+
+This API is considered to be production ready; note however that,
+while unnecessary changes will be avoided, there are overall no
+strong stability guarantees.
+
+
 Documentation
 =============
 
