@@ -24,6 +24,9 @@ This API is considered to be production ready; note however that,
 while unnecessary changes will be avoided, there are overall no
 strong stability guarantees.
 
+Please see the `VERSIONING <VERSIONING.rst>`_ file for information
+about release schedule and versioning scheme.
+
 
 Documentation
 =============
