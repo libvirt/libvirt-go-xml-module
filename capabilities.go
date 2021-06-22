@@ -130,8 +130,29 @@ type CapsHostNUMACPUs struct {
 	CPUs []CapsHostNUMACPU `xml:"cpu"`
 }
 
+type CapsHostNUMAInterconnects struct {
+	Latency   []CapsHostNUMAInterconnectLatency   `xml:"latency"`
+	Bandwidth []CapsHostNUMAInterconnectBandwidth `xml:"bandwidth"`
+}
+
+type CapsHostNUMAInterconnectLatency struct {
+	Initiator uint   `xml:"initiator,attr"`
+	Target    uint   `xml:"target,attr"`
+	Type      string `xml:"type,attr"`
+	Value     uint   `xml:"value,attr"`
+}
+
+type CapsHostNUMAInterconnectBandwidth struct {
+	Initiator uint   `xml:"initiator,attr"`
+	Target    uint   `xml:"target,attr"`
+	Type      string `xml:"type,attr"`
+	Value     uint   `xml:"value,attr"`
+	Unit      string `xml:"unit,attr"`
+}
+
 type CapsHostNUMATopology struct {
-	Cells *CapsHostNUMACells `xml:"cells"`
+	Cells         *CapsHostNUMACells         `xml:"cells"`
+	Interconnects *CapsHostNUMAInterconnects `xml:"interconnects"`
 }
 
 type CapsHostNUMACells struct {
