@@ -94,11 +94,30 @@ type CapsHostNUMASibling struct {
 	Value int `xml:"value,attr"`
 }
 
+type CapsHostNUMACacheSize struct {
+	Value uint   `xml:"value,attr,omitempty"`
+	Unit  string `xml:"unit,attr,omitempty"`
+}
+
+type CapsHostNUMACacheLine struct {
+	Value uint   `xml:"value,attr,omitempty"`
+	Unit  string `xml:"unit,attr,omitempty"`
+}
+
+type CapsHostNUMACache struct {
+	Level         int                    `xml:"level,attr,omitempty"`
+	Associativity string                 `xml:"associativity,attr,omitempty"`
+	Policy        string                 `xml:"policy,attr,omitempty"`
+	Size          *CapsHostNUMACacheSize `xml:"size"`
+	Line          *CapsHostNUMACacheLine `xml:"line"`
+}
+
 type CapsHostNUMACell struct {
 	ID        int                    `xml:"id,attr"`
 	Memory    *CapsHostNUMAMemory    `xml:"memory"`
 	PageInfo  []CapsHostNUMAPageInfo `xml:"pages"`
 	Distances *CapsHostNUMADistances `xml:"distances"`
+	Cache     []CapsHostNUMACache    `xml:"cache"`
 	CPUS      *CapsHostNUMACPUs      `xml:"cpus"`
 }
 
