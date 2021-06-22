@@ -126,7 +126,7 @@ type CapsHostNUMADistances struct {
 }
 
 type CapsHostNUMACPUs struct {
-	Num  uint              `xml:"num,attr,omitempty"`
+	Num  uint              `xml:"num,attr"`
 	CPUs []CapsHostNUMACPU `xml:"cpu"`
 }
 
