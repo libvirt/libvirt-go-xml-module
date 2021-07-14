@@ -2246,6 +2246,7 @@ type DomainNUMAInterconnectLatency struct {
 type DomainNUMAInterconnectBandwidth struct {
 	Initiator uint   `xml:"initiator,attr"`
 	Target    uint   `xml:"target,attr"`
+	Cache     uint   `xml:"cache,attr,omitempty"`
 	Type      string `xml:"type,attr"`
 	Value     uint   `xml:"value,attr"`
 	Unit      string `xml:"unit,attr"`
