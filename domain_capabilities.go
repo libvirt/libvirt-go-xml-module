@@ -30,17 +30,18 @@ import (
 )
 
 type DomainCaps struct {
-	XMLName   xml.Name             `xml:"domainCapabilities"`
-	Path      string               `xml:"path"`
-	Domain    string               `xml:"domain"`
-	Machine   string               `xml:"machine,omitempty"`
-	Arch      string               `xml:"arch"`
-	VCPU      *DomainCapsVCPU      `xml:"vcpu"`
-	IOThreads *DomainCapsIOThreads `xml:"iothreads"`
-	OS        *DomainCapsOS        `xml:"os"`
-	CPU       *DomainCapsCPU       `xml:"cpu"`
-	Devices   *DomainCapsDevices   `xml:"devices"`
-	Features  *DomainCapsFeatures  `xml:"features"`
+	XMLName       xml.Name                 `xml:"domainCapabilities"`
+	Path          string                   `xml:"path"`
+	Domain        string                   `xml:"domain"`
+	Machine       string                   `xml:"machine,omitempty"`
+	Arch          string                   `xml:"arch"`
+	VCPU          *DomainCapsVCPU          `xml:"vcpu"`
+	IOThreads     *DomainCapsIOThreads     `xml:"iothreads"`
+	OS            *DomainCapsOS            `xml:"os"`
+	CPU           *DomainCapsCPU           `xml:"cpu"`
+	MemoryBacking *DomainCapsMemoryBacking `xml:"memoryBacking"`
+	Devices       *DomainCapsDevices       `xml:"devices"`
+	Features      *DomainCapsFeatures      `xml:"features"`
 }
 
 type DomainCapsVCPU struct {
@@ -91,6 +92,11 @@ type DomainCapsCPUFeature struct {
 type DomainCapsEnum struct {
 	Name   string   `xml:"name,attr"`
 	Values []string `xml:"value"`
+}
+
+type DomainCapsMemoryBacking struct {
+	Supported string           `xml:"supported,attr"`
+	Enums     []DomainCapsEnum `xml:"enum"`
 }
 
 type DomainCapsDevices struct {
