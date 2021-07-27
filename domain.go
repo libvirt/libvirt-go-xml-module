@@ -2373,7 +2373,8 @@ type DomainFeatureCapability struct {
 }
 
 type DomainLaunchSecurity struct {
-	SEV *DomainLaunchSecuritySEV `xml:"-"`
+	SEV    *DomainLaunchSecuritySEV    `xml:"-"`
+	S390PV *DomainLaunchSecurityS390PV `xml:"-"`
 }
 
 type DomainLaunchSecuritySEV struct {
@@ -2382,6 +2383,9 @@ type DomainLaunchSecuritySEV struct {
 	Policy          *uint  `xml:"policy"`
 	DHCert          string `xml:"dhCert"`
 	Session         string `xml:"sesion"`
+}
+
+type DomainLaunchSecurityS390PV struct {
 }
 
 type DomainFeatureCapabilities struct {
@@ -6128,6 +6132,11 @@ func (a *DomainLaunchSecurity) MarshalXML(e *xml.Encoder, start xml.StartElement
 			xml.Name{Local: "type"}, "sev",
 		})
 		return e.EncodeElement(a.SEV, start)
+	} else if a.S390PV != nil {
+		start.Attr = append(start.Attr, xml.Attr{
+			xml.Name{Local: "type"}, "s390-pv",
+		})
+		return e.EncodeElement(a.S390PV, start)
 	} else {
 		return nil
 	}
@@ -6150,6 +6159,9 @@ func (a *DomainLaunchSecurity) UnmarshalXML(d *xml.Decoder, start xml.StartEleme
 	if typ == "sev" {
 		a.SEV = &DomainLaunchSecuritySEV{}
 		return d.DecodeElement(a.SEV, &start)
+	} else if typ == "s390-pv" {
+		a.S390PV = &DomainLaunchSecurityS390PV{}
+		return d.DecodeElement(a.S390PV, &start)
 	}
 
 	return nil
