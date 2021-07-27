@@ -2514,6 +2514,7 @@ type DomainCPUTuneEmulatorSched struct {
 
 type DomainCPUCacheTune struct {
 	VCPUs   string                      `xml:"vcpus,attr,omitempty"`
+	ID      string                      `xml:"id,attr,omitempty"`
 	Cache   []DomainCPUCacheTuneCache   `xml:"cache"`
 	Monitor []DomainCPUCacheTuneMonitor `xml:"monitor"`
 }
