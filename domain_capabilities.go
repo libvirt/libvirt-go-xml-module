@@ -119,6 +119,7 @@ type DomainCapsFeatures struct {
 	GenID             *DomainCapsFeatureGenID             `xml:"genid"`
 	BackingStoreInput *DomainCapsFeatureBackingStoreInput `xml:"backingStoreInput"`
 	Backup            *DomainCapsFeatureBackup            `xml:"backup"`
+	S390PV            *DomainCapsFeatureS390PV            `xml:"s390-pv"`
 	SEV               *DomainCapsFeatureSEV               `xml:"sev"`
 }
 
@@ -140,6 +141,10 @@ type DomainCapsFeatureBackingStoreInput struct {
 }
 
 type DomainCapsFeatureBackup struct {
+	Supported string `xml:"supported,attr"`
+}
+
+type DomainCapsFeatureS390PV struct {
 	Supported string `xml:"supported,attr"`
 }
 
