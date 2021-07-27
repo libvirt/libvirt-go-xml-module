@@ -1136,9 +1136,10 @@ type DomainInputSourcePassthrough struct {
 }
 
 type DomainInputSourceEVDev struct {
-	Dev    string `xml:"dev,attr"`
-	Grab   string `xml:"grab,attr,omitempty"`
-	Repeat string `xml:"repeat,attr,omitempty"`
+	Dev        string `xml:"dev,attr"`
+	Grab       string `xml:"grab,attr,omitempty"`
+	GrabToggle string `xml:"grabToggle,attr,omitempty"`
+	Repeat     string `xml:"repeat,attr,omitempty"`
 }
 
 type DomainGraphicListenerAddress struct {
