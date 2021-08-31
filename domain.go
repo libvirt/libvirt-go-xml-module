@@ -2130,7 +2130,12 @@ type DomainOS struct {
 }
 
 type DomainResource struct {
-	Partition string `xml:"partition,omitempty"`
+	Partition    string                      `xml:"partition,omitempty"`
+	FibreChannel *DomainResourceFibreChannel `xml:"fibrechannel"`
+}
+
+type DomainResourceFibreChannel struct {
+	AppID string `xml:"appid,attr"`
 }
 
 type DomainVCPU struct {
