@@ -269,6 +269,7 @@ type DomainDiskDriver struct {
 	IOThread      *uint                    `xml:"iothread,attr"`
 	DetectZeros   string                   `xml:"detect_zeroes,attr,omitempty"`
 	Queues        *uint                    `xml:"queues,attr"`
+	QueueSize     *uint                    `xml:"queue_size,attr"`
 	IOMMU         string                   `xml:"iommu,attr,omitempty"`
 	ATS           string                   `xml:"ats,attr,omitempty"`
 	Packed        string                   `xml:"packed,attr,omitempty"`
