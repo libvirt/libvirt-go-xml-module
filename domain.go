@@ -1751,15 +1751,27 @@ type DomainMemorydevTargetSize struct {
 	Unit  string `xml:"unit,attr,omitempty"`
 }
 
+type DomainMemorydevTargetBlock struct {
+	Value uint   `xml:",chardata"`
+	Unit  string `xml:"unit,attr,omitempty"`
+}
+
+type DomainMemorydevTargetRequested struct {
+	Value uint   `xml:",chardata"`
+	Unit  string `xml:"unit,attr,omitempty"`
+}
+
 type DomainMemorydevTargetLabel struct {
 	Size *DomainMemorydevTargetSize `xml:"size"`
 }
 
 type DomainMemorydevTarget struct {
-	Size     *DomainMemorydevTargetSize     `xml:"size"`
-	Node     *DomainMemorydevTargetNode     `xml:"node"`
-	Label    *DomainMemorydevTargetLabel    `xml:"label"`
-	ReadOnly *DomainMemorydevTargetReadOnly `xml:"readonly"`
+	Size      *DomainMemorydevTargetSize      `xml:"size"`
+	Node      *DomainMemorydevTargetNode      `xml:"node"`
+	Label     *DomainMemorydevTargetLabel     `xml:"label"`
+	Block     *DomainMemorydevTargetBlock     `xml:"block"`
+	Requested *DomainMemorydevTargetRequested `xml:"requested"`
+	ReadOnly  *DomainMemorydevTargetReadOnly  `xml:"readonly"`
 }
 
 type DomainMemorydev struct {
