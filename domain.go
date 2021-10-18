@@ -86,6 +86,7 @@ type DomainControllerDriver struct {
 	IOMMU      string `xml:"iommu,attr,omitempty"`
 	ATS        string `xml:"ats,attr,omitempty"`
 	Packed     string `xml:"packed,attr,omitempty"`
+	PagePerVQ  string `xml:"page_per_vq,attr,omitempty"`
 }
 
 type DomainController struct {
@@ -273,6 +274,7 @@ type DomainDiskDriver struct {
 	IOMMU         string                   `xml:"iommu,attr,omitempty"`
 	ATS           string                   `xml:"ats,attr,omitempty"`
 	Packed        string                   `xml:"packed,attr,omitempty"`
+	PagePerVQ     string                   `xml:"page_per_vq,attr,omitempty"`
 	MetadataCache *DomainDiskMetadataCache `xml:"metadata_cache"`
 }
 
@@ -390,14 +392,15 @@ type DomainDisk struct {
 }
 
 type DomainFilesystemDriver struct {
-	Type     string `xml:"type,attr,omitempty"`
-	Format   string `xml:"format,attr,omitempty"`
-	Name     string `xml:"name,attr,omitempty"`
-	WRPolicy string `xml:"wrpolicy,attr,omitempty"`
-	IOMMU    string `xml:"iommu,attr,omitempty"`
-	ATS      string `xml:"ats,attr,omitempty"`
-	Packed   string `xml:"packed,attr,omitempty"`
-	Queue    uint   `xml:"queue,attr,omitempty"`
+	Type      string `xml:"type,attr,omitempty"`
+	Format    string `xml:"format,attr,omitempty"`
+	Name      string `xml:"name,attr,omitempty"`
+	WRPolicy  string `xml:"wrpolicy,attr,omitempty"`
+	IOMMU     string `xml:"iommu,attr,omitempty"`
+	ATS       string `xml:"ats,attr,omitempty"`
+	Packed    string `xml:"packed,attr,omitempty"`
+	PagePerVQ string `xml:"page_per_vq,attr,omitempty"`
+	Queue     uint   `xml:"queue,attr,omitempty"`
 }
 
 type DomainFilesystemSource struct {
@@ -620,6 +623,7 @@ type DomainInterfaceDriver struct {
 	IOMMU       string                      `xml:"iommu,attr,omitempty"`
 	ATS         string                      `xml:"ats,attr,omitempty"`
 	Packed      string                      `xml:"packed,attr,omitempty"`
+	PagePerVQ   string                      `xml:"page_per_vq,attr,omitempty"`
 	Host        *DomainInterfaceDriverHost  `xml:"host"`
 	Guest       *DomainInterfaceDriverGuest `xml:"guest"`
 }
@@ -1122,9 +1126,10 @@ type DomainInput struct {
 }
 
 type DomainInputDriver struct {
-	IOMMU  string `xml:"iommu,attr,omitempty"`
-	ATS    string `xml:"ats,attr,omitempty"`
-	Packed string `xml:"packed,attr,omitempty"`
+	IOMMU     string `xml:"iommu,attr,omitempty"`
+	ATS       string `xml:"ats,attr,omitempty"`
+	Packed    string `xml:"packed,attr,omitempty"`
+	PagePerVQ string `xml:"page_per_vq,attr,omitempty"`
 }
 
 type DomainInputSource struct {
@@ -1332,11 +1337,12 @@ type DomainVideo struct {
 }
 
 type DomainVideoDriver struct {
-	Name    string `xml:"name,attr,omitempty"`
-	VGAConf string `xml:"vgaconf,attr,omitempty"`
-	IOMMU   string `xml:"iommu,attr,omitempty"`
-	ATS     string `xml:"ats,attr,omitempty"`
-	Packed  string `xml:"packed,attr,omitempty"`
+	Name      string `xml:"name,attr,omitempty"`
+	VGAConf   string `xml:"vgaconf,attr,omitempty"`
+	IOMMU     string `xml:"iommu,attr,omitempty"`
+	ATS       string `xml:"ats,attr,omitempty"`
+	Packed    string `xml:"packed,attr,omitempty"`
+	PagePerVQ string `xml:"page_per_vq,attr,omitempty"`
 }
 
 type DomainMemBalloonStats struct {
@@ -1361,9 +1367,10 @@ type DomainVSockCID struct {
 }
 
 type DomainVSockDriver struct {
-	IOMMU  string `xml:"iommu,attr,omitempty"`
-	ATS    string `xml:"ats,attr,omitempty"`
-	Packed string `xml:"packed,attr,omitempty"`
+	IOMMU     string `xml:"iommu,attr,omitempty"`
+	ATS       string `xml:"ats,attr,omitempty"`
+	Packed    string `xml:"packed,attr,omitempty"`
+	PagePerVQ string `xml:"page_per_vq,attr,omitempty"`
 }
 
 type DomainVSock struct {
@@ -1377,9 +1384,10 @@ type DomainVSock struct {
 }
 
 type DomainMemBalloonDriver struct {
-	IOMMU  string `xml:"iommu,attr,omitempty"`
-	ATS    string `xml:"ats,attr,omitempty"`
-	Packed string `xml:"packed,attr,omitempty"`
+	IOMMU     string `xml:"iommu,attr,omitempty"`
+	ATS       string `xml:"ats,attr,omitempty"`
+	Packed    string `xml:"packed,attr,omitempty"`
+	PagePerVQ string `xml:"page_per_vq,attr,omitempty"`
 }
 
 type DomainPanic struct {
@@ -1573,9 +1581,10 @@ type DomainRNG struct {
 }
 
 type DomainRNGDriver struct {
-	IOMMU  string `xml:"iommu,attr,omitempty"`
-	ATS    string `xml:"ats,attr,omitempty"`
-	Packed string `xml:"packed,attr,omitempty"`
+	IOMMU     string `xml:"iommu,attr,omitempty"`
+	ATS       string `xml:"ats,attr,omitempty"`
+	Packed    string `xml:"packed,attr,omitempty"`
+	PagePerVQ string `xml:"page_per_vq,attr,omitempty"`
 }
 
 type DomainHostdevSubsysUSB struct {
