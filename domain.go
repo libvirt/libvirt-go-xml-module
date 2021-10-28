@@ -288,6 +288,7 @@ type DomainDiskTarget struct {
 
 type DomainDiskEncryption struct {
 	Format string            `xml:"format,attr,omitempty"`
+	Engine string            `xml:"engine,attr,omitempty"`
 	Secret *DomainDiskSecret `xml:"secret"`
 }
 
