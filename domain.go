@@ -2353,6 +2353,7 @@ type DomainFeatureKVM struct {
 	Hidden        *DomainFeatureState `xml:"hidden"`
 	HintDedicated *DomainFeatureState `xml:"hint-dedicated"`
 	PollControl   *DomainFeatureState `xml:"poll-control"`
+	PVIPI         *DomainFeatureState `xml:"pv-ipi"`
 }
 
 type DomainFeatureXenPassthrough struct {
