@@ -1884,6 +1884,17 @@ type DomainTPMBackendEmulator struct {
 	Version         string                      `xml:"version,attr,omitempty"`
 	Encryption      *DomainTPMBackendEncryption `xml:"encryption"`
 	PersistentState string                      `xml:"persistent_state,attr,omitempty"`
+	ActivePCRBanks  *DomainTPMBackendPCRBanks   `xml:"active_pcr_banks"`
+}
+
+type DomainTPMBackendPCRBanks struct {
+	SHA1   *DomainTPMBackendPCRBank `xml:"sha1"`
+	SHA256 *DomainTPMBackendPCRBank `xml:"sha256"`
+	SHA384 *DomainTPMBackendPCRBank `xml:"sha384"`
+	SHA512 *DomainTPMBackendPCRBank `xml:"sha512"`
+}
+
+type DomainTPMBackendPCRBank struct {
 }
 
 type DomainTPMBackendEncryption struct {
