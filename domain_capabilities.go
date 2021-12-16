@@ -106,6 +106,7 @@ type DomainCapsDevices struct {
 	HostDev    *DomainCapsDevice `xml:"hostdev"`
 	RNG        *DomainCapsDevice `xml:"rng"`
 	FileSystem *DomainCapsDevice `xml:"filesystem"`
+	TPM        *DomainCapsDevice `xml:"tpm"`
 }
 
 type DomainCapsDevice struct {
