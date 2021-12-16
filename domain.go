@@ -2344,6 +2344,7 @@ type DomainFeatureHyperVSTimer struct {
 
 type DomainFeatureHyperV struct {
 	DomainFeature
+	Mode            string                        `xml:"mode,attr,omitempty"`
 	Relaxed         *DomainFeatureState           `xml:"relaxed"`
 	VAPIC           *DomainFeatureState           `xml:"vapic"`
 	Spinlocks       *DomainFeatureHyperVSpinlocks `xml:"spinlocks"`
