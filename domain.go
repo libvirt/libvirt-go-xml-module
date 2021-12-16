@@ -2361,11 +2361,17 @@ type DomainFeatureHyperV struct {
 	EVMCS           *DomainFeatureState           `xml:"evmcs"`
 }
 
+type DomainFeatureKVMDirtyRing struct {
+	DomainFeatureState
+	Size uint `xml:"size,attr,omitempty"`
+}
+
 type DomainFeatureKVM struct {
-	Hidden        *DomainFeatureState `xml:"hidden"`
-	HintDedicated *DomainFeatureState `xml:"hint-dedicated"`
-	PollControl   *DomainFeatureState `xml:"poll-control"`
-	PVIPI         *DomainFeatureState `xml:"pv-ipi"`
+	Hidden        *DomainFeatureState        `xml:"hidden"`
+	HintDedicated *DomainFeatureState        `xml:"hint-dedicated"`
+	PollControl   *DomainFeatureState        `xml:"poll-control"`
+	PVIPI         *DomainFeatureState        `xml:"pv-ipi"`
+	DirtyRing     *DomainFeatureKVMDirtyRing `xml:"dirty-ring"`
 }
 
 type DomainFeatureXenPassthrough struct {
