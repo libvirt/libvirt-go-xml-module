@@ -153,6 +153,8 @@ type DomainCapsFeatureSEV struct {
 	Supported       string `xml:"supported,attr"`
 	CBitPos         uint   `xml:"cbitpos,omitempty"`
 	ReducedPhysBits uint   `xml:"reducedPhysBits,omitempty"`
+	MaxGuests       uint   `xml:"maxGuests,omitempty"`
+	MaxESGuests     uint   `xml:"maxESGuests,omitempty"`
 }
 
 func (c *DomainCaps) Unmarshal(doc string) error {
