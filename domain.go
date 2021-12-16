@@ -2374,6 +2374,15 @@ type DomainFeatureKVM struct {
 	DirtyRing     *DomainFeatureKVMDirtyRing `xml:"dirty-ring"`
 }
 
+type DomainFeatureTCGTBCache struct {
+	Unit string `xml:"unit,attr,omitempty"`
+	Size uint   `xml:",chardata"`
+}
+
+type DomainFeatureTCG struct {
+	TBCache *DomainFeatureTCGTBCache `xml:"tb-cache"`
+}
+
 type DomainFeatureXenPassthrough struct {
 	State string `xml:"state,attr,omitempty"`
 	Mode  string `xml:"mode,attr,omitempty"`
@@ -2519,6 +2528,7 @@ type DomainFeatureList struct {
 	CFPC         *DomainFeatureCFPC         `xml:"cfpc"`
 	SBBC         *DomainFeatureSBBC         `xml:"sbbc"`
 	IBS          *DomainFeatureIBS          `xml:"ibs"`
+	TCG          *DomainFeatureTCG          `xml:"tcg"`
 }
 
 type DomainCPUTuneShares struct {
