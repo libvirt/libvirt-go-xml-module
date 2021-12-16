@@ -2435,6 +2435,7 @@ type DomainLaunchSecurity struct {
 }
 
 type DomainLaunchSecuritySEV struct {
+	KernelHashes    string `xml:"kernelHashes,attr,omitempty"`
 	CBitPos         *uint  `xml:"cbitpos"`
 	ReducedPhysBits *uint  `xml:"reducedPhysBits"`
 	Policy          *uint  `xml:"policy"`
@@ -6066,6 +6067,13 @@ func (d *DomainCPU) Marshal() (string, error) {
 }
 
 func (a *DomainLaunchSecuritySEV) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+
+	if a.KernelHashes != "" {
+		start.Attr = append(start.Attr, xml.Attr{
+			xml.Name{Local: "kernelHashes"}, a.KernelHashes,
+		})
+	}
+
 	e.EncodeToken(start)
 
 	if a.CBitPos != nil {
@@ -6115,6 +6123,12 @@ func (a *DomainLaunchSecuritySEV) MarshalXML(e *xml.Encoder, start xml.StartElem
 }
 
 func (a *DomainLaunchSecuritySEV) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	for _, attr := range start.Attr {
+		if attr.Name.Local == "kernelHashes" {
+			a.KernelHashes = attr.Value
+		}
+	}
+
 	for {
 		tok, err := d.Token()
 		if err == io.EOF {
