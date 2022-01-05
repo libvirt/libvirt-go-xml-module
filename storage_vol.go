@@ -41,6 +41,7 @@ type StorageVolumeTargetPermissions struct {
 
 type StorageVolumeTargetFeature struct {
 	LazyRefcounts *struct{} `xml:"lazy_refcounts"`
+	ExtendedL2    *struct{} `xml:"extended_l2"`
 }
 
 type StorageVolumeTargetFormat struct {
