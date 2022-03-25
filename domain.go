@@ -2013,7 +2013,8 @@ type DomainMemoryAccess struct {
 }
 
 type DomainMemoryAllocation struct {
-	Mode string `xml:"mode,attr,omitempty"`
+	Mode    string `xml:"mode,attr,omitempty"`
+	Threads uint   `xml:"threads,attr,omitempty"`
 }
 
 type DomainMemoryDiscard struct {
