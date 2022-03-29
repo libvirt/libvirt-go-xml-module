@@ -2662,6 +2662,26 @@ type DomainQEMUDeprecation struct {
 	Behavior string   `xml:"behavior,attr,omitempty"`
 }
 
+type DomainQEMUOverride struct {
+	XMLName xml.Name                   `xml:"http://libvirt.org/schemas/domain/qemu/1.0 override"`
+	Devices []DomainQEMUOverrideDevice `xml:"device"`
+}
+
+type DomainQEMUOverrideDevice struct {
+	Alias    string                     `xml:"alias,attr"`
+	Frontend DomainQEMUOverrideFrontend `xml:"frontend"`
+}
+
+type DomainQEMUOverrideFrontend struct {
+	Properties []DomainQEMUOverrideProperty `xml:"property"`
+}
+
+type DomainQEMUOverrideProperty struct {
+	Name  string `xml:"name,attr"`
+	Type  string `xml:"type,attr,omitempty"`
+	Value string `xml:"value,attr,omitempty"`
+}
+
 type DomainLXCNamespace struct {
 	XMLName  xml.Name               `xml:"http://libvirt.org/schemas/domain/lxc/1.0 namespace"`
 	ShareNet *DomainLXCNamespaceMap `xml:"sharenet"`
@@ -2863,6 +2883,7 @@ type Domain struct {
 	/* Hypervisor namespaces must all be last */
 	QEMUCommandline      *DomainQEMUCommandline
 	QEMUCapabilities     *DomainQEMUCapabilities
+	QEMUOverride         *DomainQEMUOverride
 	QEMUDeprecation      *DomainQEMUDeprecation
 	LXCNamespace         *DomainLXCNamespace
 	BHyveCommandline     *DomainBHyveCommandline
