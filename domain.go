@@ -1817,8 +1817,11 @@ type DomainHub struct {
 }
 
 type DomainIOMMU struct {
-	Model  string             `xml:"model,attr"`
-	Driver *DomainIOMMUDriver `xml:"driver"`
+	Model   string             `xml:"model,attr"`
+	Driver  *DomainIOMMUDriver `xml:"driver"`
+	ACPI    *DomainDeviceACPI  `xml:"acpi"`
+	Alias   *DomainAlias       `xml:"alias"`
+	Address *DomainAddress     `xml:"address"`
 }
 
 type DomainIOMMUDriver struct {
