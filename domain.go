@@ -832,6 +832,7 @@ type DomainChardevSource struct {
 	SpicePort   *DomainChardevSourceSpicePort   `xml:"-"`
 	NMDM        *DomainChardevSourceNMDM        `xml:"-"`
 	QEMUVDAgent *DomainChardevSourceQEMUVDAgent `xml:"-"`
+	DBus        *DomainChardevSourceDBus        `xml:"-"`
 }
 
 type DomainChardevSourceNull struct {
@@ -914,6 +915,10 @@ type DomainChardevSourceQEMUVDAgentClipBoard struct {
 type DomainChardevSourceQEMUVDAgent struct {
 	Mouse     *DomainChardevSourceQEMUVDAgentMouse     `xml:"mouse"`
 	ClipBoard *DomainChardevSourceQEMUVDAgentClipBoard `xml:"clipboard"`
+}
+
+type DomainChardevSourceDBus struct {
+	Channel string `xml:"channel,attr,omitempty"`
 }
 
 type DomainChardevTarget struct {
@@ -4340,6 +4345,8 @@ func getChardevSourceType(s *DomainChardevSource) string {
 		return "nmdm"
 	} else if s.QEMUVDAgent != nil {
 		return "qemu-vdagent"
+	} else if s.DBus != nil {
+		return "dbus"
 	}
 	return ""
 }
@@ -4401,6 +4408,10 @@ func createChardevSource(typ string) *DomainChardevSource {
 	case "qemu-vdagent":
 		return &DomainChardevSource{
 			QEMUVDAgent: &DomainChardevSourceQEMUVDAgent{},
+		}
+	case "dbus":
+		return &DomainChardevSource{
+			DBus: &DomainChardevSourceDBus{},
 		}
 	}
 
@@ -4471,6 +4482,8 @@ func (a *DomainChardevSource) MarshalXML(e *xml.Encoder, start xml.StartElement)
 		return e.EncodeElement(a.NMDM, start)
 	} else if a.QEMUVDAgent != nil {
 		return e.EncodeElement(a.QEMUVDAgent, start)
+	} else if a.DBus != nil {
+		return e.EncodeElement(a.DBus, start)
 	}
 	return nil
 }
@@ -4517,6 +4530,8 @@ func (a *DomainChardevSource) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 		return d.DecodeElement(a.NMDM, &start)
 	} else if a.QEMUVDAgent != nil {
 		return d.DecodeElement(a.QEMUVDAgent, &start)
+	} else if a.DBus != nil {
+		return d.DecodeElement(a.DBus, &start)
 	}
 	return nil
 }

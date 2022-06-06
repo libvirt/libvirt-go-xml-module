@@ -204,6 +204,10 @@ var extraActualNodes = map[string][]string{
 	"testdata/libvirt/tests/bhyvexml2argvdata/bhyvexml2argv-console-master-slave-not-specified.xml": []string{
 		"/domain[0]/devices[0]/console[0]/source[0]",
 	},
+	"testdata/libvirt/tests/qemuxml2argvdata/graphics-dbus-usbredir.xml": []string{
+		"/domain[0]/devices[0]/redirdev[0]/source[0]",
+		"/domain[0]/devices[0]/redirdev[1]/source[0]",
+	},
 }
 
 var extraExpectNodes = map[string][]string{
