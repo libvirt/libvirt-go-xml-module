@@ -430,6 +430,10 @@ func syncGit(t *testing.T) {
 			t.Fatal(fmt.Errorf("Unable to update libvirt.git: %s: %s", err, msg))
 		}
 
+		if os.Getenv("LIBVIRT_SKIP_GIT") != "" {
+			return
+		}
+
 		ref := os.Getenv("LIBVIRT_REF")
 		if ref == "" {
 			ref = "master"
