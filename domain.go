@@ -2318,6 +2318,7 @@ type DomainClock struct {
 	Basis      string        `xml:"basis,attr,omitempty"`
 	Adjustment string        `xml:"adjustment,attr,omitempty"`
 	TimeZone   string        `xml:"timezone,attr,omitempty"`
+	Start      uint          `xml:"start,attr,omitempty"`
 	Timer      []DomainTimer `xml:"timer"`
 }
 
