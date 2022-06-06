@@ -1459,6 +1459,7 @@ type DomainAudio struct {
 	SDL         *DomainAudioSDL        `xml:"-"`
 	SPICE       *DomainAudioSPICE      `xml:"-"`
 	File        *DomainAudioFile       `xml:"-"`
+	DBus        *DomainAudioDBus       `xml:"-"`
 }
 
 type DomainAudioChannel struct {
@@ -1573,6 +1574,15 @@ type DomainAudioFile struct {
 }
 
 type DomainAudioFileChannel struct {
+	DomainAudioChannel
+}
+
+type DomainAudioDBus struct {
+	Input  *DomainAudioDBusChannel `xml:"input"`
+	Output *DomainAudioDBusChannel `xml:"output"`
+}
+
+type DomainAudioDBusChannel struct {
 	DomainAudioChannel
 }
 
@@ -5510,6 +5520,11 @@ func (a *DomainAudio) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			xml.Name{Local: "type"}, "file",
 		})
 		return e.EncodeElement(a.File, start)
+	} else if a.DBus != nil {
+		start.Attr = append(start.Attr, xml.Attr{
+			xml.Name{Local: "type"}, "dbus",
+		})
+		return e.EncodeElement(a.DBus, start)
 	}
 	return nil
 }
@@ -5608,6 +5623,14 @@ func (a *DomainAudio) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 			return err
 		}
 		a.File = &file
+		return nil
+	} else if typ == "dbus" {
+		var dbus DomainAudioDBus
+		err := d.DecodeElement(&dbus, &start)
+		if err != nil {
+			return err
+		}
+		a.DBus = &dbus
 		return nil
 	}
 	return nil
