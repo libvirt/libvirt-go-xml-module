@@ -818,19 +818,20 @@ type DomainInterface struct {
 }
 
 type DomainChardevSource struct {
-	Null      *DomainChardevSourceNull      `xml:"-"`
-	VC        *DomainChardevSourceVC        `xml:"-"`
-	Pty       *DomainChardevSourcePty       `xml:"-"`
-	Dev       *DomainChardevSourceDev       `xml:"-"`
-	File      *DomainChardevSourceFile      `xml:"-"`
-	Pipe      *DomainChardevSourcePipe      `xml:"-"`
-	StdIO     *DomainChardevSourceStdIO     `xml:"-"`
-	UDP       *DomainChardevSourceUDP       `xml:"-"`
-	TCP       *DomainChardevSourceTCP       `xml:"-"`
-	UNIX      *DomainChardevSourceUNIX      `xml:"-"`
-	SpiceVMC  *DomainChardevSourceSpiceVMC  `xml:"-"`
-	SpicePort *DomainChardevSourceSpicePort `xml:"-"`
-	NMDM      *DomainChardevSourceNMDM      `xml:"-"`
+	Null        *DomainChardevSourceNull        `xml:"-"`
+	VC          *DomainChardevSourceVC          `xml:"-"`
+	Pty         *DomainChardevSourcePty         `xml:"-"`
+	Dev         *DomainChardevSourceDev         `xml:"-"`
+	File        *DomainChardevSourceFile        `xml:"-"`
+	Pipe        *DomainChardevSourcePipe        `xml:"-"`
+	StdIO       *DomainChardevSourceStdIO       `xml:"-"`
+	UDP         *DomainChardevSourceUDP         `xml:"-"`
+	TCP         *DomainChardevSourceTCP         `xml:"-"`
+	UNIX        *DomainChardevSourceUNIX        `xml:"-"`
+	SpiceVMC    *DomainChardevSourceSpiceVMC    `xml:"-"`
+	SpicePort   *DomainChardevSourceSpicePort   `xml:"-"`
+	NMDM        *DomainChardevSourceNMDM        `xml:"-"`
+	QEMUVDAgent *DomainChardevSourceQEMUVDAgent `xml:"-"`
 }
 
 type DomainChardevSourceNull struct {
@@ -900,6 +901,19 @@ type DomainChardevSourceSpicePort struct {
 type DomainChardevSourceNMDM struct {
 	Master string `xml:"master,attr"`
 	Slave  string `xml:"slave,attr"`
+}
+
+type DomainChardevSourceQEMUVDAgentMouse struct {
+	Mode string `xml:"mode,attr"`
+}
+
+type DomainChardevSourceQEMUVDAgentClipBoard struct {
+	CopyPaste string `xml:"copypaste,attr"`
+}
+
+type DomainChardevSourceQEMUVDAgent struct {
+	Mouse     *DomainChardevSourceQEMUVDAgentMouse     `xml:"mouse"`
+	ClipBoard *DomainChardevSourceQEMUVDAgentClipBoard `xml:"clipboard"`
 }
 
 type DomainChardevTarget struct {
@@ -4301,6 +4315,8 @@ func getChardevSourceType(s *DomainChardevSource) string {
 		return "spiceport"
 	} else if s.NMDM != nil {
 		return "nmdm"
+	} else if s.QEMUVDAgent != nil {
+		return "qemu-vdagent"
 	}
 	return ""
 }
@@ -4358,6 +4374,10 @@ func createChardevSource(typ string) *DomainChardevSource {
 	case "nmdm":
 		return &DomainChardevSource{
 			NMDM: &DomainChardevSourceNMDM{},
+		}
+	case "qemu-vdagent":
+		return &DomainChardevSource{
+			QEMUVDAgent: &DomainChardevSourceQEMUVDAgent{},
 		}
 	}
 
@@ -4426,6 +4446,8 @@ func (a *DomainChardevSource) MarshalXML(e *xml.Encoder, start xml.StartElement)
 		return e.EncodeElement(a.SpicePort, start)
 	} else if a.NMDM != nil {
 		return e.EncodeElement(a.NMDM, start)
+	} else if a.QEMUVDAgent != nil {
+		return e.EncodeElement(a.QEMUVDAgent, start)
 	}
 	return nil
 }
@@ -4470,6 +4492,8 @@ func (a *DomainChardevSource) UnmarshalXML(d *xml.Decoder, start xml.StartElemen
 		return d.DecodeElement(a.SpicePort, &start)
 	} else if a.NMDM != nil {
 		return d.DecodeElement(a.NMDM, &start)
+	} else if a.QEMUVDAgent != nil {
+		return d.DecodeElement(a.QEMUVDAgent, &start)
 	}
 	return nil
 }
