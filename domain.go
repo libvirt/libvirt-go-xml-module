@@ -1307,6 +1307,17 @@ type DomainGraphicEGLHeadless struct {
 	GL *DomainGraphicEGLHeadlessGL `xml:"gl"`
 }
 
+type DomainGraphicDBusGL struct {
+	Enable     string `xml:"enable,attr,omitempty"`
+	RenderNode string `xml:"rendernode,attr,omitempty"`
+}
+
+type DomainGraphicDBus struct {
+	Address string               `xml:"address,attr,omitempty"`
+	P2P     string               `xml:"p2p,attr,omitempty"`
+	GL      *DomainGraphicDBusGL `xml:"gl"`
+}
+
 type DomainGraphicAudio struct {
 	ID uint `xml:"id,attr,omitempty"`
 }
@@ -1319,6 +1330,7 @@ type DomainGraphic struct {
 	Desktop     *DomainGraphicDesktop     `xml:"-"`
 	Spice       *DomainGraphicSpice       `xml:"-"`
 	EGLHeadless *DomainGraphicEGLHeadless `xml:"-"`
+	DBus        *DomainGraphicDBus        `xml:"-"`
 	Audio       *DomainGraphicAudio       `xml:"audio"`
 }
 
@@ -5316,6 +5328,11 @@ type domainGraphicEGLHeadless struct {
 	Audio *DomainGraphicAudio `xml:"audio"`
 }
 
+type domainGraphicDBus struct {
+	DomainGraphicDBus
+	Audio *DomainGraphicAudio `xml:"audio"`
+}
+
 func (a *DomainGraphic) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "graphics"
 	if a.SDL != nil {
@@ -5354,6 +5371,12 @@ func (a *DomainGraphic) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 		})
 		egl := domainGraphicEGLHeadless{*a.EGLHeadless, a.Audio}
 		return e.EncodeElement(egl, start)
+	} else if a.DBus != nil {
+		start.Attr = append(start.Attr, xml.Attr{
+			xml.Name{Local: "type"}, "dbus",
+		})
+		dbus := domainGraphicDBus{*a.DBus, a.Audio}
+		return e.EncodeElement(dbus, start)
 	}
 	return nil
 }
@@ -5416,6 +5439,15 @@ func (a *DomainGraphic) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 		}
 		a.EGLHeadless = &egl.DomainGraphicEGLHeadless
 		a.Audio = egl.Audio
+		return nil
+	} else if typ == "dbus" {
+		var dbus domainGraphicDBus
+		err := d.DecodeElement(&dbus, &start)
+		if err != nil {
+			return err
+		}
+		a.DBus = &dbus.DomainGraphicDBus
+		a.Audio = dbus.Audio
 		return nil
 	}
 	return nil
