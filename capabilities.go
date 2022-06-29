@@ -48,11 +48,18 @@ type CapsHostCPUMicrocode struct {
 	Version int `xml:"version,attr"`
 }
 
+type CapsHostCPUSignature struct {
+	Family   int `xml:"family,attr"`
+	Model    int `xml:"model,attr"`
+	Stepping int `xml:"stepping,attr"`
+}
+
 type CapsHostCPU struct {
 	XMLName      xml.Name                 `xml:"cpu"`
 	Arch         string                   `xml:"arch,omitempty"`
 	Model        string                   `xml:"model,omitempty"`
 	Vendor       string                   `xml:"vendor,omitempty"`
+	Signature    *CapsHostCPUSignature    `xml:"signature,omitempty"`
 	Topology     *CapsHostCPUTopology     `xml:"topology"`
 	FeatureFlags []CapsHostCPUFeatureFlag `xml:"feature"`
 	Features     *CapsHostCPUFeatures     `xml:"features"`
