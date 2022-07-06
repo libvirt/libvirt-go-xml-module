@@ -2087,8 +2087,9 @@ type DomainSMBios struct {
 }
 
 type DomainNVRam struct {
-	NVRam    string `xml:",chardata"`
-	Template string `xml:"template,attr,omitempty"`
+	NVRam    string            `xml:",chardata"`
+	Source   *DomainDiskSource `xml:"source"`
+	Template string            `xml:"template,attr,omitempty"`
 }
 
 type DomainBootDevice struct {
@@ -6430,4 +6431,76 @@ func (a *DomainSysInfo) UnmarshalXML(d *xml.Decoder, start xml.StartElement) err
 		*a = DomainSysInfo(gen)
 		return nil
 	}
+}
+
+type domainNVRam DomainNVRam
+
+func (a *DomainNVRam) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	start.Name.Local = "nvram"
+	if a.Source != nil {
+		if a.Source.File != nil {
+			start.Attr = append(start.Attr, xml.Attr{
+				xml.Name{Local: "type"}, "file",
+			})
+		} else if a.Source.Block != nil {
+			start.Attr = append(start.Attr, xml.Attr{
+				xml.Name{Local: "type"}, "block",
+			})
+		} else if a.Source.Dir != nil {
+			start.Attr = append(start.Attr, xml.Attr{
+				xml.Name{Local: "type"}, "dir",
+			})
+		} else if a.Source.Network != nil {
+			start.Attr = append(start.Attr, xml.Attr{
+				xml.Name{Local: "type"}, "network",
+			})
+		} else if a.Source.Volume != nil {
+			start.Attr = append(start.Attr, xml.Attr{
+				xml.Name{Local: "type"}, "volume",
+			})
+		} else if a.Source.NVME != nil {
+			start.Attr = append(start.Attr, xml.Attr{
+				xml.Name{Local: "type"}, "nvme",
+			})
+		} else if a.Source.VHostUser != nil {
+			start.Attr = append(start.Attr, xml.Attr{
+				xml.Name{Local: "type"}, "vhostuser",
+			})
+		}
+	}
+	disk := domainNVRam(*a)
+	return e.EncodeElement(disk, start)
+}
+
+func (a *DomainNVRam) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	typ, ok := getAttr(start.Attr, "type")
+
+	if ok {
+		a.Source = &DomainDiskSource{}
+		if typ == "file" {
+			a.Source.File = &DomainDiskSourceFile{}
+		} else if typ == "block" {
+			a.Source.Block = &DomainDiskSourceBlock{}
+		} else if typ == "network" {
+			a.Source.Network = &DomainDiskSourceNetwork{}
+		} else if typ == "dir" {
+			a.Source.Dir = &DomainDiskSourceDir{}
+		} else if typ == "volume" {
+			a.Source.Volume = &DomainDiskSourceVolume{}
+		} else if typ == "nvme" {
+			a.Source.NVME = &DomainDiskSourceNVME{}
+		} else if typ == "vhostuser" {
+			a.Source.VHostUser = &DomainDiskSourceVHostUser{}
+		}
+	}
+	disk := domainNVRam(*a)
+	err := d.DecodeElement(&disk, &start)
+	if err != nil {
+		return err
+	}
+	if a.Source != nil {
+		a.NVRam = ""
+	}
+	*a = DomainNVRam(disk)
+	return nil
 }
