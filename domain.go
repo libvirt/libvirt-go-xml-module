@@ -2827,7 +2827,9 @@ type DomainIOThreadIDs struct {
 }
 
 type DomainIOThread struct {
-	ID uint `xml:"id,attr"`
+	ID      uint  `xml:"id,attr"`
+	PoolMin *uint `xml:"thread_pool_min,attr"`
+	PoolMax *uint `xml:"thread_pool_max,attr"`
 }
 
 type DomainKeyWrap struct {
