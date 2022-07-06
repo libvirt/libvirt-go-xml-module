@@ -476,12 +476,17 @@ type DomainFilesystemBinaryLock struct {
 	Flock string `xml:"flock,attr,omitempty"`
 }
 
+type DomainFilesystemBinaryThreadPool struct {
+	Size uint `xml:"size,attr,omitempty"`
+}
+
 type DomainFilesystemBinary struct {
-	Path    string                         `xml:"path,attr,omitempty"`
-	XAttr   string                         `xml:"xattr,attr,omitempty"`
-	Cache   *DomainFilesystemBinaryCache   `xml:"cache"`
-	Sandbox *DomainFilesystemBinarySandbox `xml:"sandbox"`
-	Lock    *DomainFilesystemBinaryLock    `xml:"lock"`
+	Path       string                            `xml:"path,attr,omitempty"`
+	XAttr      string                            `xml:"xattr,attr,omitempty"`
+	Cache      *DomainFilesystemBinaryCache      `xml:"cache"`
+	Sandbox    *DomainFilesystemBinarySandbox    `xml:"sandbox"`
+	Lock       *DomainFilesystemBinaryLock       `xml:"lock"`
+	ThreadPool *DomainFilesystemBinaryThreadPool `xml:"thread_pool"`
 }
 
 type DomainFilesystem struct {
