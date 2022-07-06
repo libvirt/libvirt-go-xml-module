@@ -1,3 +1,4 @@
+//go:build xmlroundtrip
 // +build xmlroundtrip
 
 /*
