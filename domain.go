@@ -1642,7 +1642,8 @@ type DomainHostdevSubsysUSB struct {
 }
 
 type DomainHostdevSubsysUSBSource struct {
-	Address *DomainAddressUSB `xml:"address"`
+	GuestReset string            `xml:"guestReset,attr,omitempty"`
+	Address    *DomainAddressUSB `xml:"address"`
 }
 
 type DomainHostdevSubsysSCSI struct {
@@ -3990,6 +3991,7 @@ func (a *DomainInterfaceSourceHostdev) UnmarshalXML(d *xml.Decoder, start xml.St
 					}
 				} else if typ == "usb" {
 					a.USB = &DomainHostdevSubsysUSBSource{
+						"",
 						&DomainAddressUSB{},
 					}
 					err := d.DecodeElement(a.USB, &tok)
