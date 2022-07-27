@@ -2166,10 +2166,11 @@ type DomainBIOS struct {
 }
 
 type DomainLoader struct {
-	Path     string `xml:",chardata"`
-	Readonly string `xml:"readonly,attr,omitempty"`
-	Secure   string `xml:"secure,attr,omitempty"`
-	Type     string `xml:"type,attr,omitempty"`
+	Path      string `xml:",chardata"`
+	Readonly  string `xml:"readonly,attr,omitempty"`
+	Secure    string `xml:"secure,attr,omitempty"`
+	Stateless string `xml:"stateless,attr,omitempty"`
+	Type      string `xml:"type,attr,omitempty"`
 }
 
 type DomainACPI struct {
