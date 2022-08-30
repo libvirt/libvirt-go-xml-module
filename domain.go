@@ -534,6 +534,7 @@ type DomainInterfaceSource struct {
 	UDP       *DomainInterfaceSourceUDP      `xml:"-"`
 	VDPA      *DomainInterfaceSourceVDPA     `xml:"-"`
 	Null      *DomainInterfaceSourceNull     `xml:"-"`
+	VDS       *DomainInterfaceSourceVDS      `xml:"-"`
 }
 
 type DomainInterfaceSourceUser struct {
@@ -598,6 +599,13 @@ type DomainInterfaceSourceVDPA struct {
 }
 
 type DomainInterfaceSourceNull struct {
+}
+
+type DomainInterfaceSourceVDS struct {
+	SwitchID     string `xml:"switchid,attr"`
+	PortID       int    `xml:"portid,attr"`
+	PortGroupID  string `xml:"portgroupid,attr"`
+	ConnectionID int    `xml:"connectionid,attr"`
 }
 
 type DomainInterfaceSourceLocal struct {
@@ -4057,6 +4065,8 @@ func (a *DomainInterfaceSource) MarshalXML(e *xml.Encoder, start xml.StartElemen
 		return e.EncodeElement(a.VDPA, start)
 	} else if a.Null != nil {
 		return e.EncodeElement(a.Null, start)
+	} else if a.VDS != nil {
+		return e.EncodeElement(a.VDS, start)
 	}
 	return nil
 }
@@ -4095,6 +4105,8 @@ func (a *DomainInterfaceSource) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 		return d.DecodeElement(a.VDPA, &start)
 	} else if a.Null != nil {
 		return d.DecodeElement(a.Null, &start)
+	} else if a.VDS != nil {
+		return d.DecodeElement(a.VDS, &start)
 	}
 	return nil
 }
@@ -4160,6 +4172,10 @@ func (a *DomainInterface) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 			start.Attr = append(start.Attr, xml.Attr{
 				xml.Name{Local: "type"}, "null",
 			})
+		} else if a.Source.VDS != nil {
+			start.Attr = append(start.Attr, xml.Attr{
+				xml.Name{Local: "type"}, "vds",
+			})
 		}
 	}
 	fs := domainInterface(*a)
@@ -4200,6 +4216,8 @@ func (a *DomainInterface) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 		a.Source.VDPA = &DomainInterfaceSourceVDPA{}
 	} else if typ == "null" {
 		a.Source.Null = &DomainInterfaceSourceNull{}
+	} else if typ == "vds" {
+		a.Source.VDS = &DomainInterfaceSourceVDS{}
 	}
 	fs := domainInterface(*a)
 	err := d.DecodeElement(&fs, &start)
