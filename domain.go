@@ -2269,18 +2269,24 @@ type DomainCPUCache struct {
 	Mode  string `xml:"mode,attr"`
 }
 
+type DomainCPUMaxPhysAddr struct {
+	Mode string `xml:"mode,attr"`
+	Bits uint   `xml:"bits,attr,omitempty"`
+}
+
 type DomainCPU struct {
-	XMLName    xml.Name           `xml:"cpu"`
-	Match      string             `xml:"match,attr,omitempty"`
-	Mode       string             `xml:"mode,attr,omitempty"`
-	Check      string             `xml:"check,attr,omitempty"`
-	Migratable string             `xml:"migratable,attr,omitempty"`
-	Model      *DomainCPUModel    `xml:"model"`
-	Vendor     string             `xml:"vendor,omitempty"`
-	Topology   *DomainCPUTopology `xml:"topology"`
-	Cache      *DomainCPUCache    `xml:"cache"`
-	Features   []DomainCPUFeature `xml:"feature"`
-	Numa       *DomainNuma        `xml:"numa"`
+	XMLName     xml.Name              `xml:"cpu"`
+	Match       string                `xml:"match,attr,omitempty"`
+	Mode        string                `xml:"mode,attr,omitempty"`
+	Check       string                `xml:"check,attr,omitempty"`
+	Migratable  string                `xml:"migratable,attr,omitempty"`
+	Model       *DomainCPUModel       `xml:"model"`
+	Vendor      string                `xml:"vendor,omitempty"`
+	Topology    *DomainCPUTopology    `xml:"topology"`
+	Cache       *DomainCPUCache       `xml:"cache"`
+	MaxPhysAddr *DomainCPUMaxPhysAddr `xml:"maxphysaddr"`
+	Features    []DomainCPUFeature    `xml:"feature"`
+	Numa        *DomainNuma           `xml:"numa"`
 }
 
 type DomainNuma struct {
