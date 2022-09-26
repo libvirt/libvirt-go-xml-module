@@ -236,8 +236,8 @@ type NodeDeviceNetCapability struct {
 }
 
 type NodeDeviceSCSIVPortOpsCapability struct {
-	VPorts    int `xml:"vports,omitempty"`
-	MaxVPorts int `xml:"maxvports,omitempty"`
+	VPorts    int `xml:"vports"`
+	MaxVPorts int `xml:"max_vports"`
 }
 
 type NodeDeviceSCSIFCHostCapability struct {
