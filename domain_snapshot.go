@@ -52,6 +52,10 @@ type DomainSnapshotInactiveDomain struct {
 	Domain
 }
 
+type DomainSnapshotCookie struct {
+	XML string `xml:",innerxml"`
+}
+
 type DomainSnapshot struct {
 	XMLName        xml.Name                      `xml:"domainsnapshot"`
 	Name           string                        `xml:"name,omitempty"`
@@ -64,6 +68,7 @@ type DomainSnapshot struct {
 	Domain         *Domain                       `xml:"domain"`
 	InactiveDomain *DomainSnapshotInactiveDomain `xml:"inactiveDomain"`
 	Active         *uint                         `xml:"active"`
+	Cookie         *DomainSnapshotCookie         `xml:"cookie"`
 }
 
 type domainSnapshotDisk DomainSnapshotDisk
