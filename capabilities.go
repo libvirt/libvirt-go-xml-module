@@ -31,6 +31,7 @@ import (
 
 type CapsHostCPUTopology struct {
 	Sockets int `xml:"sockets,attr"`
+	Dies    int `xml:"dies,attr,omitempty"`
 	Cores   int `xml:"cores,attr"`
 	Threads int `xml:"threads,attr"`
 }
