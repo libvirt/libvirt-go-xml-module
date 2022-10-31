@@ -82,6 +82,7 @@ type DomainCapsCPUModel struct {
 	Usable     string `xml:"usable,attr,omitempty"`
 	Fallback   string `xml:"fallback,attr,omitempty"`
 	Deprecated string `xml:"deprecated,attr,omitempty"`
+	Vendor     string `xml:"vendor,attr,omitempty"`
 }
 
 type DomainCapsCPUFeature struct {
