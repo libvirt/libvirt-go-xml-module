@@ -108,6 +108,8 @@ type DomainCapsDevices struct {
 	RNG        *DomainCapsDevice `xml:"rng"`
 	FileSystem *DomainCapsDevice `xml:"filesystem"`
 	TPM        *DomainCapsDevice `xml:"tpm"`
+	Redirdev   *DomainCapsDevice `xml:"redirdev"`
+	Channel    *DomainCapsDevice `xml:"channel"`
 }
 
 type DomainCapsDevice struct {
