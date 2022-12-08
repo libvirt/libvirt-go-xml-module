@@ -2434,6 +2434,7 @@ type DomainFeatureHyperV struct {
 	TLBFlush        *DomainFeatureState           `xml:"tlbflush"`
 	IPI             *DomainFeatureState           `xml:"ipi"`
 	EVMCS           *DomainFeatureState           `xml:"evmcs"`
+	AVIC            *DomainFeatureState           `xml:"avic"`
 }
 
 type DomainFeatureKVMDirtyRing struct {
