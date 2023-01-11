@@ -182,6 +182,7 @@ type DomainDiskSlice struct {
 
 type DomainDiskSourceFile struct {
 	File     string                 `xml:"file,attr,omitempty"`
+	FDGroup  string                 `xml:"fdgroup,attr,omitempty"`
 	SecLabel []DomainDeviceSecLabel `xml:"seclabel"`
 }
 
