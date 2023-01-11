@@ -126,6 +126,7 @@ type DomainCapsFeatures struct {
 	S390PV            *DomainCapsFeatureS390PV            `xml:"s390-pv"`
 	SEV               *DomainCapsFeatureSEV               `xml:"sev"`
 	SGX               *DomainCapsFeatureSGX               `xml:"sgx"`
+	HyperV            *DomainCapsFeatureHyperV            `xml:"hyperv"`
 }
 
 type DomainCapsFeatureGIC struct {
@@ -183,6 +184,11 @@ type DomainCapsFeatureSGXSection struct {
 	Node uint   `xml:"node,attr"`
 	Size uint   `xml:"size,attr"`
 	Unit string `xml:"unit,attr"`
+}
+
+type DomainCapsFeatureHyperV struct {
+	Supported string           `xml:"supported,attr"`
+	Enums     []DomainCapsEnum `xml:"enum"`
 }
 
 func (c *DomainCaps) Unmarshal(doc string) error {
