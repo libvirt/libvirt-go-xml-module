@@ -539,6 +539,21 @@ type DomainInterfaceSource struct {
 }
 
 type DomainInterfaceSourceUser struct {
+	Dev string `xml:"dev,attr,omitempty"`
+}
+
+type DomainInterfaceSourcePortForward struct {
+	Proto   string                                  `xml:"proto,attr"`
+	Address string                                  `xml:"address,attr,omitempty"`
+	Dev     string                                  `xml:"dev,attr,omitempty"`
+	Ranges  []DomainInterfaceSourcePortForwardRange `xml:"range"`
+}
+
+type DomainInterfaceSourcePortForwardRange struct {
+	Start   uint   `xml:"start,attr"`
+	End     uint   `xml:"end,attr,omitempty"`
+	To      uint   `xml:"to,attr,omitempty"`
+	Exclude string `xml:"exclude,attr,omitempty"`
 }
 
 type DomainInterfaceSourceEthernet struct {
@@ -747,8 +762,10 @@ type DomainInterfaceFilterParam struct {
 }
 
 type DomainInterfaceBackend struct {
-	Tap   string `xml:"tap,attr,omitempty"`
-	VHost string `xml:"vhost,attr,omitempty"`
+	Type    string `xml:"type,attr,omitempty"`
+	Tap     string `xml:"tap,attr,omitempty"`
+	VHost   string `xml:"vhost,attr,omitempty"`
+	LogFile string `xml:"logFile,attr,omitempty"`
 }
 
 type DomainInterfaceTune struct {
@@ -803,36 +820,37 @@ type DomainInterfacePortOptions struct {
 }
 
 type DomainInterface struct {
-	XMLName             xml.Name                    `xml:"interface"`
-	Managed             string                      `xml:"managed,attr,omitempty"`
-	TrustGuestRXFilters string                      `xml:"trustGuestRxFilters,attr,omitempty"`
-	MAC                 *DomainInterfaceMAC         `xml:"mac"`
-	Source              *DomainInterfaceSource      `xml:"source"`
-	Boot                *DomainDeviceBoot           `xml:"boot"`
-	VLan                *DomainInterfaceVLan        `xml:"vlan"`
-	VirtualPort         *DomainInterfaceVirtualPort `xml:"virtualport"`
-	IP                  []DomainInterfaceIP         `xml:"ip"`
-	Route               []DomainInterfaceRoute      `xml:"route"`
-	Script              *DomainInterfaceScript      `xml:"script"`
-	DownScript          *DomainInterfaceScript      `xml:"downscript"`
-	BackendDomain       *DomainBackendDomain        `xml:"backenddomain"`
-	Target              *DomainInterfaceTarget      `xml:"target"`
-	Guest               *DomainInterfaceGuest       `xml:"guest"`
-	Model               *DomainInterfaceModel       `xml:"model"`
-	Driver              *DomainInterfaceDriver      `xml:"driver"`
-	Backend             *DomainInterfaceBackend     `xml:"backend"`
-	FilterRef           *DomainInterfaceFilterRef   `xml:"filterref"`
-	Tune                *DomainInterfaceTune        `xml:"tune"`
-	Teaming             *DomainInterfaceTeaming     `xml:"teaming"`
-	Link                *DomainInterfaceLink        `xml:"link"`
-	MTU                 *DomainInterfaceMTU         `xml:"mtu"`
-	Bandwidth           *DomainInterfaceBandwidth   `xml:"bandwidth"`
-	PortOptions         *DomainInterfacePortOptions `xml:"port"`
-	Coalesce            *DomainInterfaceCoalesce    `xml:"coalesce"`
-	ROM                 *DomainROM                  `xml:"rom"`
-	ACPI                *DomainDeviceACPI           `xml:"acpi"`
-	Alias               *DomainAlias                `xml:"alias"`
-	Address             *DomainAddress              `xml:"address"`
+	XMLName             xml.Name                           `xml:"interface"`
+	Managed             string                             `xml:"managed,attr,omitempty"`
+	TrustGuestRXFilters string                             `xml:"trustGuestRxFilters,attr,omitempty"`
+	MAC                 *DomainInterfaceMAC                `xml:"mac"`
+	Source              *DomainInterfaceSource             `xml:"source"`
+	Boot                *DomainDeviceBoot                  `xml:"boot"`
+	VLan                *DomainInterfaceVLan               `xml:"vlan"`
+	VirtualPort         *DomainInterfaceVirtualPort        `xml:"virtualport"`
+	IP                  []DomainInterfaceIP                `xml:"ip"`
+	Route               []DomainInterfaceRoute             `xml:"route"`
+	PortForward         []DomainInterfaceSourcePortForward `xml:"portForward"`
+	Script              *DomainInterfaceScript             `xml:"script"`
+	DownScript          *DomainInterfaceScript             `xml:"downscript"`
+	BackendDomain       *DomainBackendDomain               `xml:"backenddomain"`
+	Target              *DomainInterfaceTarget             `xml:"target"`
+	Guest               *DomainInterfaceGuest              `xml:"guest"`
+	Model               *DomainInterfaceModel              `xml:"model"`
+	Driver              *DomainInterfaceDriver             `xml:"driver"`
+	Backend             *DomainInterfaceBackend            `xml:"backend"`
+	FilterRef           *DomainInterfaceFilterRef          `xml:"filterref"`
+	Tune                *DomainInterfaceTune               `xml:"tune"`
+	Teaming             *DomainInterfaceTeaming            `xml:"teaming"`
+	Link                *DomainInterfaceLink               `xml:"link"`
+	MTU                 *DomainInterfaceMTU                `xml:"mtu"`
+	Bandwidth           *DomainInterfaceBandwidth          `xml:"bandwidth"`
+	PortOptions         *DomainInterfacePortOptions        `xml:"port"`
+	Coalesce            *DomainInterfaceCoalesce           `xml:"coalesce"`
+	ROM                 *DomainROM                         `xml:"rom"`
+	ACPI                *DomainDeviceACPI                  `xml:"acpi"`
+	Alias               *DomainAlias                       `xml:"alias"`
+	Address             *DomainAddress                     `xml:"address"`
 }
 
 type DomainChardevSource struct {
@@ -4029,9 +4047,11 @@ func (a *DomainInterfaceSourceHostdev) UnmarshalXML(d *xml.Decoder, start xml.St
 
 func (a *DomainInterfaceSource) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if a.User != nil {
-		/* We don't want an empty <source></source> for User mode */
-		//return e.EncodeElement(a.User, start)
-		return nil
+		if a.User.Dev != "" {
+			return e.EncodeElement(a.User, start)
+		} else {
+			return nil
+		}
 	} else if a.Ethernet != nil {
 		if len(a.Ethernet.IP) > 0 && len(a.Ethernet.Route) > 0 {
 			return e.EncodeElement(a.Ethernet, start)
