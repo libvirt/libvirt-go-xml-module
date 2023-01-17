@@ -1958,6 +1958,7 @@ type DomainTPM struct {
 type DomainTPMBackend struct {
 	Passthrough *DomainTPMBackendPassthrough `xml:"-"`
 	Emulator    *DomainTPMBackendEmulator    `xml:"-"`
+	External    *DomainTPMBackendExternal    `xml:"-"`
 }
 
 type DomainTPMBackendPassthrough struct {
@@ -1987,6 +1988,12 @@ type DomainTPMBackendEncryption struct {
 
 type DomainTPMBackendDevice struct {
 	Path string `xml:"path,attr"`
+}
+
+type DomainTPMBackendExternalSource DomainChardevSource
+
+type DomainTPMBackendExternal struct {
+	Source *DomainTPMBackendExternalSource `xml:"source"`
 }
 
 type DomainShmem struct {
@@ -4324,6 +4331,32 @@ func (d *DomainSmartcard) Marshal() (string, error) {
 	return string(doc), nil
 }
 
+func (a *DomainTPMBackendExternalSource) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	start.Name.Local = "source"
+	src := DomainChardevSource(*a)
+	typ := getChardevSourceType(&src)
+	if typ != "" {
+		start.Attr = append(start.Attr, xml.Attr{
+			xml.Name{Local: "type"}, typ,
+		})
+	}
+	return e.EncodeElement(&src, start)
+}
+
+func (a *DomainTPMBackendExternalSource) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	typ, ok := getAttr(start.Attr, "type")
+	if !ok {
+		typ = "unix"
+	}
+	src := createChardevSource(typ)
+	err := d.DecodeElement(&src, &start)
+	if err != nil {
+		return err
+	}
+	*a = DomainTPMBackendExternalSource(*src)
+	return nil
+}
+
 func (a *DomainTPMBackend) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	start.Name.Local = "backend"
 	if a.Passthrough != nil {
@@ -4339,6 +4372,14 @@ func (a *DomainTPMBackend) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 			xml.Name{Local: "type"}, "emulator",
 		})
 		err := e.EncodeElement(a.Emulator, start)
+		if err != nil {
+			return err
+		}
+	} else if a.External != nil {
+		start.Attr = append(start.Attr, xml.Attr{
+			xml.Name{Local: "type"}, "external",
+		})
+		err := e.EncodeElement(a.External, start)
 		if err != nil {
 			return err
 		}
@@ -4360,6 +4401,12 @@ func (a *DomainTPMBackend) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 	} else if typ == "emulator" {
 		a.Emulator = &DomainTPMBackendEmulator{}
 		err := d.DecodeElement(a.Emulator, &start)
+		if err != nil {
+			return err
+		}
+	} else if typ == "external" {
+		a.External = &DomainTPMBackendExternal{}
+		err := d.DecodeElement(a.External, &start)
 		if err != nil {
 			return err
 		}
