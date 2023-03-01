@@ -2070,7 +2070,7 @@ type DomainDeviceList struct {
 	RedirDevs    []DomainRedirDev    `xml:"redirdev"`
 	RedirFilters []DomainRedirFilter `xml:"redirfilter"`
 	Hubs         []DomainHub         `xml:"hub"`
-	Watchdog     *DomainWatchdog     `xml:"watchdog"`
+	Watchdogs    []DomainWatchdog    `xml:"watchdog"`
 	MemBalloon   *DomainMemBalloon   `xml:"memballoon"`
 	RNGs         []DomainRNG         `xml:"rng"`
 	NVRAM        *DomainNVRAM        `xml:"nvram"`
