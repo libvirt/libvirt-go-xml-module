@@ -2028,6 +2028,26 @@ type DomainShmemMSI struct {
 	IOEventFD string `xml:"ioeventfd,attr,omitempty"`
 }
 
+type DomainCrypto struct {
+	Model   string               `xml:"model,attr,omitempty"`
+	Type    string               `xml:"type,attr,omitempty"`
+	Backend *DomainCryptoBackend `xml:"backend"`
+	Alias   *DomainAlias         `xml:"alias"`
+	Address *DomainAddress       `xml:"address"`
+}
+
+type DomainCryptoBackend struct {
+	BuiltIn *DomainCryptoBackendBuiltIn `xml:"-"`
+	LKCF    *DomainCryptoBackendLKCF    `xml:"-"`
+	Queues  uint                        `xml:"queues,attr,omitempty"`
+}
+
+type DomainCryptoBackendBuiltIn struct {
+}
+
+type DomainCryptoBackendLKCF struct {
+}
+
 type DomainDeviceList struct {
 	Emulator     string              `xml:"emulator,omitempty"`
 	Disks        []DomainDisk        `xml:"disk"`
@@ -2059,6 +2079,7 @@ type DomainDeviceList struct {
 	Memorydevs   []DomainMemorydev   `xml:"memory"`
 	IOMMU        *DomainIOMMU        `xml:"iommu"`
 	VSock        *DomainVSock        `xml:"vsock"`
+	Crypto       []DomainCrypto      `xml:"crypto"`
 }
 
 type DomainMemory struct {
@@ -5797,6 +5818,55 @@ func (d *DomainWatchdog) Marshal() (string, error) {
 		return "", err
 	}
 	return string(doc), nil
+}
+
+func (a *DomainCryptoBackend) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	start.Name.Local = "backend"
+	if a.BuiltIn != nil {
+		start.Attr = append(start.Attr, xml.Attr{
+			xml.Name{Local: "model"}, "builtin",
+		})
+	} else if a.LKCF != nil {
+		start.Attr = append(start.Attr, xml.Attr{
+			xml.Name{Local: "model"}, "lkcf",
+		})
+	}
+	marshalUintAttr(&start, "queues", &a.Queues, "%d")
+	e.EncodeToken(start)
+	e.EncodeToken(start.End())
+	return nil
+}
+
+func (a *DomainCryptoBackend) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	typ, ok := getAttr(start.Attr, "model")
+	if !ok {
+		return fmt.Errorf("Missing 'model' attribute on domain crypto backend")
+	}
+	for _, attr := range start.Attr {
+		if attr.Name.Local == "queues" {
+			var v *uint
+			if err := unmarshalUintAttr(attr.Value, &v, 10); err != nil {
+				return err
+			}
+			if v != nil {
+				a.Queues = *v
+			}
+		}
+	}
+
+	if typ == "builtin" {
+		var builtin DomainCryptoBackendBuiltIn
+		a.BuiltIn = &builtin
+		d.Skip()
+		return nil
+	} else if typ == "lkcf" {
+		var lkcf DomainCryptoBackendLKCF
+		a.LKCF = &lkcf
+		d.Skip()
+		return nil
+	}
+
+	return nil
 }
 
 func marshalUintAttr(start *xml.StartElement, name string, val *uint, format string) {
