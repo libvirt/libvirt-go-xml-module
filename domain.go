@@ -2155,6 +2155,7 @@ type DomainNVRam struct {
 	NVRam    string            `xml:",chardata"`
 	Source   *DomainDiskSource `xml:"source"`
 	Template string            `xml:"template,attr,omitempty"`
+	Format   string            `xml:"format,attr,omitempty"`
 }
 
 type DomainBootDevice struct {
@@ -2230,6 +2231,7 @@ type DomainLoader struct {
 	Secure    string `xml:"secure,attr,omitempty"`
 	Stateless string `xml:"stateless,attr,omitempty"`
 	Type      string `xml:"type,attr,omitempty"`
+	Format    string `xml:"format,attr,omitempty"`
 }
 
 type DomainACPI struct {
