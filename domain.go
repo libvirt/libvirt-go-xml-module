@@ -216,6 +216,7 @@ type DomainDiskSourceNetwork struct {
 	Initiator   *DomainDiskSourceNetworkInitiator `xml:"initiator"`
 	Snapshot    *DomainDiskSourceNetworkSnapshot  `xml:"snapshot"`
 	Config      *DomainDiskSourceNetworkConfig    `xml:"config"`
+	Reconnect   *DomainDiskSourceNetworkReconnect `xml:"reconnect"`
 	Auth        *DomainDiskAuth                   `xml:"auth"`
 }
 
@@ -238,6 +239,10 @@ type DomainDiskSourceNetworkSnapshot struct {
 
 type DomainDiskSourceNetworkConfig struct {
 	File string `xml:"file,attr"`
+}
+
+type DomainDiskSourceNetworkReconnect struct {
+	Delay string `xml:"delay,attr"`
 }
 
 type DomainDiskSourceVolume struct {
