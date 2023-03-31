@@ -1399,6 +1399,7 @@ type DomainVideoModel struct {
 	VRam64     uint                   `xml:"vram64,attr,omitempty"`
 	VGAMem     uint                   `xml:"vgamem,attr,omitempty"`
 	Primary    string                 `xml:"primary,attr,omitempty"`
+	Blob       string                 `xml:"blob,attr,omitempty"`
 	Accel      *DomainVideoAccel      `xml:"acceleration"`
 	Resolution *DomainVideoResolution `xml:"resolution"`
 }
