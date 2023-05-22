@@ -2337,8 +2337,9 @@ type DomainCPUCache struct {
 }
 
 type DomainCPUMaxPhysAddr struct {
-	Mode string `xml:"mode,attr"`
-	Bits uint   `xml:"bits,attr,omitempty"`
+	Mode  string `xml:"mode,attr"`
+	Bits  uint   `xml:"bits,attr,omitempty"`
+	Limit uint   `xml:"limit,attr,omitempty"`
 }
 
 type DomainCPU struct {
