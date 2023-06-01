@@ -1480,13 +1480,14 @@ type DomainSoundCodec struct {
 }
 
 type DomainSound struct {
-	XMLName xml.Name           `xml:"sound"`
-	Model   string             `xml:"model,attr"`
-	Codec   []DomainSoundCodec `xml:"codec"`
-	Audio   *DomainSoundAudio  `xml:"audio"`
-	ACPI    *DomainDeviceACPI  `xml:"acpi"`
-	Alias   *DomainAlias       `xml:"alias"`
-	Address *DomainAddress     `xml:"address"`
+	XMLName      xml.Name           `xml:"sound"`
+	Model        string             `xml:"model,attr"`
+	MultiChannel string             `xml:"multichannel,attr,omitempty"`
+	Codec        []DomainSoundCodec `xml:"codec"`
+	Audio        *DomainSoundAudio  `xml:"audio"`
+	ACPI         *DomainDeviceACPI  `xml:"acpi"`
+	Alias        *DomainAlias       `xml:"alias"`
+	Address      *DomainAddress     `xml:"address"`
 }
 
 type DomainSoundAudio struct {
