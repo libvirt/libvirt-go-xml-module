@@ -2908,10 +2908,17 @@ type DomainIOThreadIDs struct {
 	IOThreads []DomainIOThread `xml:"iothread"`
 }
 
+type DomainIOThreadPoll struct {
+	Max    *uint `xml:"max,attr"`
+	Grow   *uint `xml:"grow,attr"`
+	Shrink *uint `xml:"shrink,attr"`
+}
+
 type DomainIOThread struct {
-	ID      uint  `xml:"id,attr"`
-	PoolMin *uint `xml:"thread_pool_min,attr"`
-	PoolMax *uint `xml:"thread_pool_max,attr"`
+	ID      uint                `xml:"id,attr"`
+	PoolMin *uint               `xml:"thread_pool_min,attr"`
+	PoolMax *uint               `xml:"thread_pool_max,attr"`
+	Poll    *DomainIOThreadPoll `xml:"poll"`
 }
 
 type DomainDefaultIOThread struct {
