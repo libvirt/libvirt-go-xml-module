@@ -1862,6 +1862,10 @@ type DomainMemorydevTargetLabel struct {
 	Size *DomainMemorydevTargetSize `xml:"size"`
 }
 
+type DomainMemorydevTargetAddress struct {
+	Base *uint `xml:"base,attr"`
+}
+
 type DomainMemorydevTarget struct {
 	Size      *DomainMemorydevTargetSize      `xml:"size"`
 	Node      *DomainMemorydevTargetNode      `xml:"node"`
@@ -1869,6 +1873,7 @@ type DomainMemorydevTarget struct {
 	Block     *DomainMemorydevTargetBlock     `xml:"block"`
 	Requested *DomainMemorydevTargetRequested `xml:"requested"`
 	ReadOnly  *DomainMemorydevTargetReadOnly  `xml:"readonly"`
+	Address   *DomainMemorydevTargetAddress   `xml:"address"`
 }
 
 type DomainMemorydev struct {
@@ -5901,6 +5906,13 @@ func marshalUint64Attr(start *xml.StartElement, name string, val *uint64, format
 	}
 }
 
+func (a *DomainMemorydevTargetAddress) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	marshalUintAttr(&start, "base", a.Base, "0x%08x")
+	e.EncodeToken(start)
+	e.EncodeToken(start.End())
+	return nil
+}
+
 func (a *DomainAddressPCI) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	marshalUintAttr(&start, "domain", a.Domain, "0x%04x")
 	marshalUintAttr(&start, "bus", a.Bus, "0x%02x")
@@ -6110,6 +6122,19 @@ func unmarshalUintAttr(valstr string, valptr **uint, base int) error {
 	}
 	vali := uint(val)
 	*valptr = &vali
+	return nil
+}
+
+func (a *DomainMemorydevTargetAddress) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	for _, attr := range start.Attr {
+		if attr.Name.Local == "base" {
+			if err := unmarshalUintAttr(attr.Value, &a.Base, 0); err != nil {
+				return err
+			}
+		}
+	}
+
+	d.Skip()
 	return nil
 }
 
