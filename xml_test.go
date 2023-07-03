@@ -126,6 +126,9 @@ var extraActualNodes = map[string][]string{
 	"testdata/libvirt/tests/qemuxml2argvdata/disk-drive-discard.xml": []string{
 		"/domain[0]/devices[0]/disk[0]/@type",
 	},
+	"testdata/libvirt/tests/qemuxml2argvdata/disk-discard_no_unref.xml": []string{
+		"/domain[0]/devices[0]/disk[0]/@type",
+	},
 	"testdata/libvirt/tests/genericxml2xmlindata/chardev-udp.xml": []string{
 		"/domain[0]/devices[0]/channel[0]/source[0]/@mode",
 	},
