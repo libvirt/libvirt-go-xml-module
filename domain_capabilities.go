@@ -68,13 +68,19 @@ type DomainCapsCPU struct {
 	Modes []DomainCapsCPUMode `xml:"mode"`
 }
 
+type DomainCapsCPUMaxPhysAddr struct {
+	Mode  string `xml:"mode,attr"`
+	Limit uint   `xml:"limit,attr"`
+}
+
 type DomainCapsCPUMode struct {
-	Name      string                 `xml:"name,attr"`
-	Supported string                 `xml:"supported,attr"`
-	Models    []DomainCapsCPUModel   `xml:"model"`
-	Vendor    string                 `xml:"vendor,omitempty"`
-	Features  []DomainCapsCPUFeature `xml:"feature"`
-	Enums     []DomainCapsEnum       `xml:"enum"`
+	Name        string                    `xml:"name,attr"`
+	Supported   string                    `xml:"supported,attr"`
+	Models      []DomainCapsCPUModel      `xml:"model"`
+	Vendor      string                    `xml:"vendor,omitempty"`
+	MaxPhysAddr *DomainCapsCPUMaxPhysAddr `xml:"maxphysaddr"`
+	Features    []DomainCapsCPUFeature    `xml:"feature"`
+	Enums       []DomainCapsEnum          `xml:"enum"`
 }
 
 type DomainCapsCPUModel struct {
