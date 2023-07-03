@@ -264,25 +264,26 @@ type DomainDiskMetadataCacheSize struct {
 }
 
 type DomainDiskDriver struct {
-	Name          string                   `xml:"name,attr,omitempty"`
-	Type          string                   `xml:"type,attr,omitempty"`
-	Cache         string                   `xml:"cache,attr,omitempty"`
-	ErrorPolicy   string                   `xml:"error_policy,attr,omitempty"`
-	RErrorPolicy  string                   `xml:"rerror_policy,attr,omitempty"`
-	IO            string                   `xml:"io,attr,omitempty"`
-	IOEventFD     string                   `xml:"ioeventfd,attr,omitempty"`
-	EventIDX      string                   `xml:"event_idx,attr,omitempty"`
-	CopyOnRead    string                   `xml:"copy_on_read,attr,omitempty"`
-	Discard       string                   `xml:"discard,attr,omitempty"`
-	IOThread      *uint                    `xml:"iothread,attr"`
-	DetectZeros   string                   `xml:"detect_zeroes,attr,omitempty"`
-	Queues        *uint                    `xml:"queues,attr"`
-	QueueSize     *uint                    `xml:"queue_size,attr"`
-	IOMMU         string                   `xml:"iommu,attr,omitempty"`
-	ATS           string                   `xml:"ats,attr,omitempty"`
-	Packed        string                   `xml:"packed,attr,omitempty"`
-	PagePerVQ     string                   `xml:"page_per_vq,attr,omitempty"`
-	MetadataCache *DomainDiskMetadataCache `xml:"metadata_cache"`
+	Name           string                   `xml:"name,attr,omitempty"`
+	Type           string                   `xml:"type,attr,omitempty"`
+	Cache          string                   `xml:"cache,attr,omitempty"`
+	ErrorPolicy    string                   `xml:"error_policy,attr,omitempty"`
+	RErrorPolicy   string                   `xml:"rerror_policy,attr,omitempty"`
+	IO             string                   `xml:"io,attr,omitempty"`
+	IOEventFD      string                   `xml:"ioeventfd,attr,omitempty"`
+	EventIDX       string                   `xml:"event_idx,attr,omitempty"`
+	CopyOnRead     string                   `xml:"copy_on_read,attr,omitempty"`
+	Discard        string                   `xml:"discard,attr,omitempty"`
+	DiscardNoUnref string                   `xml:"discard_no_unref,attr,omitempty"`
+	IOThread       *uint                    `xml:"iothread,attr"`
+	DetectZeros    string                   `xml:"detect_zeroes,attr,omitempty"`
+	Queues         *uint                    `xml:"queues,attr"`
+	QueueSize      *uint                    `xml:"queue_size,attr"`
+	IOMMU          string                   `xml:"iommu,attr,omitempty"`
+	ATS            string                   `xml:"ats,attr,omitempty"`
+	Packed         string                   `xml:"packed,attr,omitempty"`
+	PagePerVQ      string                   `xml:"page_per_vq,attr,omitempty"`
+	MetadataCache  *DomainDiskMetadataCache `xml:"metadata_cache"`
 }
 
 type DomainDiskTarget struct {
