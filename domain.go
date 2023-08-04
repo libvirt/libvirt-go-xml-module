@@ -2642,33 +2642,38 @@ type DomainFeatureIBS struct {
 	Value string `xml:"value,attr"`
 }
 
+type DomainFeatureAsyncTeardown struct {
+	Enabled string `xml:"enabled,attr,omitempty"`
+}
+
 type DomainFeatureList struct {
-	PAE          *DomainFeature             `xml:"pae"`
-	ACPI         *DomainFeature             `xml:"acpi"`
-	APIC         *DomainFeatureAPIC         `xml:"apic"`
-	HAP          *DomainFeatureState        `xml:"hap"`
-	Viridian     *DomainFeature             `xml:"viridian"`
-	PrivNet      *DomainFeature             `xml:"privnet"`
-	HyperV       *DomainFeatureHyperV       `xml:"hyperv"`
-	KVM          *DomainFeatureKVM          `xml:"kvm"`
-	Xen          *DomainFeatureXen          `xml:"xen"`
-	PVSpinlock   *DomainFeatureState        `xml:"pvspinlock"`
-	PMU          *DomainFeatureState        `xml:"pmu"`
-	VMPort       *DomainFeatureState        `xml:"vmport"`
-	GIC          *DomainFeatureGIC          `xml:"gic"`
-	SMM          *DomainFeatureSMM          `xml:"smm"`
-	IOAPIC       *DomainFeatureIOAPIC       `xml:"ioapic"`
-	HPT          *DomainFeatureHPT          `xml:"hpt"`
-	HTM          *DomainFeatureState        `xml:"htm"`
-	NestedHV     *DomainFeatureState        `xml:"nested-hv"`
-	Capabilities *DomainFeatureCapabilities `xml:"capabilities"`
-	VMCoreInfo   *DomainFeatureState        `xml:"vmcoreinfo"`
-	MSRS         *DomainFeatureMSRS         `xml:"msrs"`
-	CCFAssist    *DomainFeatureState        `xml:"ccf-assist"`
-	CFPC         *DomainFeatureCFPC         `xml:"cfpc"`
-	SBBC         *DomainFeatureSBBC         `xml:"sbbc"`
-	IBS          *DomainFeatureIBS          `xml:"ibs"`
-	TCG          *DomainFeatureTCG          `xml:"tcg"`
+	PAE           *DomainFeature              `xml:"pae"`
+	ACPI          *DomainFeature              `xml:"acpi"`
+	APIC          *DomainFeatureAPIC          `xml:"apic"`
+	HAP           *DomainFeatureState         `xml:"hap"`
+	Viridian      *DomainFeature              `xml:"viridian"`
+	PrivNet       *DomainFeature              `xml:"privnet"`
+	HyperV        *DomainFeatureHyperV        `xml:"hyperv"`
+	KVM           *DomainFeatureKVM           `xml:"kvm"`
+	Xen           *DomainFeatureXen           `xml:"xen"`
+	PVSpinlock    *DomainFeatureState         `xml:"pvspinlock"`
+	PMU           *DomainFeatureState         `xml:"pmu"`
+	VMPort        *DomainFeatureState         `xml:"vmport"`
+	GIC           *DomainFeatureGIC           `xml:"gic"`
+	SMM           *DomainFeatureSMM           `xml:"smm"`
+	IOAPIC        *DomainFeatureIOAPIC        `xml:"ioapic"`
+	HPT           *DomainFeatureHPT           `xml:"hpt"`
+	HTM           *DomainFeatureState         `xml:"htm"`
+	NestedHV      *DomainFeatureState         `xml:"nested-hv"`
+	Capabilities  *DomainFeatureCapabilities  `xml:"capabilities"`
+	VMCoreInfo    *DomainFeatureState         `xml:"vmcoreinfo"`
+	MSRS          *DomainFeatureMSRS          `xml:"msrs"`
+	CCFAssist     *DomainFeatureState         `xml:"ccf-assist"`
+	CFPC          *DomainFeatureCFPC          `xml:"cfpc"`
+	SBBC          *DomainFeatureSBBC          `xml:"sbbc"`
+	IBS           *DomainFeatureIBS           `xml:"ibs"`
+	TCG           *DomainFeatureTCG           `xml:"tcg"`
+	AsyncTeardown *DomainFeatureAsyncTeardown `xml:"async-teardown"`
 }
 
 type DomainCPUTuneShares struct {
