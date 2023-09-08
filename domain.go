@@ -341,8 +341,9 @@ type DomainDiskGeometry struct {
 }
 
 type DomainDiskBlockIO struct {
-	LogicalBlockSize  uint `xml:"logical_block_size,attr,omitempty"`
-	PhysicalBlockSize uint `xml:"physical_block_size,attr,omitempty"`
+	LogicalBlockSize   uint `xml:"logical_block_size,attr,omitempty"`
+	PhysicalBlockSize  uint `xml:"physical_block_size,attr,omitempty"`
+	DiscardGranularity uint `xml:"discard_granularity,attr,omitempty"`
 }
 
 type DomainDiskFormat struct {
