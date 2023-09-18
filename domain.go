@@ -159,6 +159,7 @@ type DomainDiskSource struct {
 	Volume        *DomainDiskSourceVolume    `xml:"-"`
 	NVME          *DomainDiskSourceNVME      `xml:"-"`
 	VHostUser     *DomainDiskSourceVHostUser `xml:"-"`
+	VHostVDPA     *DomainDiskSourceVHostVDPA `xml:"-"`
 	StartupPolicy string                     `xml:"startupPolicy,attr,omitempty"`
 	Index         uint                       `xml:"index,attr,omitempty"`
 	Encryption    *DomainDiskEncryption      `xml:"encryption"`
@@ -253,6 +254,10 @@ type DomainDiskSourceVolume struct {
 }
 
 type DomainDiskSourceVHostUser DomainChardevSource
+
+type DomainDiskSourceVHostVDPA struct {
+	Dev string `xml:"dev,attr"`
+}
 
 type DomainDiskMetadataCache struct {
 	MaxSize *DomainDiskMetadataCacheSize `xml:"max_size"`
@@ -3374,6 +3379,11 @@ type domainDiskSourceVHostUser struct {
 	domainDiskSource
 }
 
+type domainDiskSourceVHostVDPA struct {
+	DomainDiskSourceVHostVDPA
+	domainDiskSource
+}
+
 func (a *DomainDiskSource) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if a.File != nil {
 		if a.StartupPolicy == "" && a.Encryption == nil && a.File.File == "" {
@@ -3422,6 +3432,11 @@ func (a *DomainDiskSource) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	} else if a.VHostUser != nil {
 		vhost := domainDiskSourceVHostUser{
 			*a.VHostUser, domainDiskSource(*a),
+		}
+		return e.EncodeElement(&vhost, start)
+	} else if a.VHostVDPA != nil {
+		vhost := domainDiskSourceVHostVDPA{
+			*a.VHostVDPA, domainDiskSource(*a),
 		}
 		return e.EncodeElement(&vhost, start)
 	}
@@ -3506,6 +3521,16 @@ func (a *DomainDiskSource) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 		}
 		*a = DomainDiskSource(vhost.domainDiskSource)
 		a.VHostUser = &vhost.DomainDiskSourceVHostUser
+	} else if a.VHostVDPA != nil {
+		vhost := domainDiskSourceVHostVDPA{
+			*a.VHostVDPA, domainDiskSource(*a),
+		}
+		err := d.DecodeElement(&vhost, &start)
+		if err != nil {
+			return err
+		}
+		*a = DomainDiskSource(vhost.domainDiskSource)
+		a.VHostVDPA = &vhost.DomainDiskSourceVHostVDPA
 	}
 	return nil
 }
@@ -3539,6 +3564,10 @@ func (a *DomainDiskBackingStore) MarshalXML(e *xml.Encoder, start xml.StartEleme
 			start.Attr = append(start.Attr, xml.Attr{
 				xml.Name{Local: "type"}, "vhostuser",
 			})
+		} else if a.Source.VHostVDPA != nil {
+			start.Attr = append(start.Attr, xml.Attr{
+				xml.Name{Local: "type"}, "vhostvdpa",
+			})
 		}
 	}
 	disk := domainDiskBackingStore(*a)
@@ -3563,6 +3592,8 @@ func (a *DomainDiskBackingStore) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 		a.Source.Volume = &DomainDiskSourceVolume{}
 	} else if typ == "vhostuser" {
 		a.Source.VHostUser = &DomainDiskSourceVHostUser{}
+	} else if typ == "vhostvdpa" {
+		a.Source.VHostVDPA = &DomainDiskSourceVHostVDPA{}
 	}
 	disk := domainDiskBackingStore(*a)
 	err := d.DecodeElement(&disk, &start)
@@ -3615,6 +3646,10 @@ func (a *DomainDiskMirror) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 			start.Attr = append(start.Attr, xml.Attr{
 				xml.Name{Local: "type"}, "vhostuser",
 			})
+		} else if a.Source.VHostVDPA != nil {
+			start.Attr = append(start.Attr, xml.Attr{
+				xml.Name{Local: "type"}, "vhostvdpa",
+			})
 		}
 	}
 	disk := domainDiskMirror(*a)
@@ -3639,6 +3674,8 @@ func (a *DomainDiskMirror) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 		a.Source.Volume = &DomainDiskSourceVolume{}
 	} else if typ == "vhostuser" {
 		a.Source.VHostUser = &DomainDiskSourceVHostUser{}
+	} else if typ == "vhostvdpa" {
+		a.Source.VHostVDPA = &DomainDiskSourceVHostVDPA{}
 	}
 	disk := domainDiskMirror(*a)
 	err := d.DecodeElement(&disk, &start)
@@ -3700,6 +3737,10 @@ func (a *DomainDisk) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			start.Attr = append(start.Attr, xml.Attr{
 				xml.Name{Local: "type"}, "vhostuser",
 			})
+		} else if a.Source.VHostVDPA != nil {
+			start.Attr = append(start.Attr, xml.Attr{
+				xml.Name{Local: "type"}, "vhostvdpa",
+			})
 		}
 	}
 	disk := domainDisk(*a)
@@ -3726,6 +3767,8 @@ func (a *DomainDisk) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error 
 		a.Source.NVME = &DomainDiskSourceNVME{}
 	} else if typ == "vhostuser" {
 		a.Source.VHostUser = &DomainDiskSourceVHostUser{}
+	} else if typ == "vhostvdpa" {
+		a.Source.VHostVDPA = &DomainDiskSourceVHostVDPA{}
 	}
 	disk := domainDisk(*a)
 	err := d.DecodeElement(&disk, &start)
@@ -6708,6 +6751,10 @@ func (a *DomainNVRam) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			start.Attr = append(start.Attr, xml.Attr{
 				xml.Name{Local: "type"}, "vhostuser",
 			})
+		} else if a.Source.VHostVDPA != nil {
+			start.Attr = append(start.Attr, xml.Attr{
+				xml.Name{Local: "type"}, "vhostvdpa",
+			})
 		}
 	}
 	disk := domainNVRam(*a)
@@ -6733,6 +6780,8 @@ func (a *DomainNVRam) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 			a.Source.NVME = &DomainDiskSourceNVME{}
 		} else if typ == "vhostuser" {
 			a.Source.VHostUser = &DomainDiskSourceVHostUser{}
+		} else if typ == "vhostvdpa" {
+			a.Source.VHostVDPA = &DomainDiskSourceVHostVDPA{}
 		}
 	}
 	disk := domainNVRam(*a)
