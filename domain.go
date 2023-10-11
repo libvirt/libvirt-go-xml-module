@@ -207,23 +207,31 @@ type DomainDiskSourceDir struct {
 }
 
 type DomainDiskSourceNetwork struct {
-	Protocol    string                            `xml:"protocol,attr,omitempty"`
-	Name        string                            `xml:"name,attr,omitempty"`
-	Query       string                            `xml:"query,attr,omitempty"`
-	TLS         string                            `xml:"tls,attr,omitempty"`
-	TLSHostname string                            `xml:"tlsHostname,attr,omitempty"`
-	Hosts       []DomainDiskSourceHost            `xml:"host"`
-	Identity    *DomainDiskSourceNetworkIdentity  `xml:"identity"`
-	Initiator   *DomainDiskSourceNetworkInitiator `xml:"initiator"`
-	Snapshot    *DomainDiskSourceNetworkSnapshot  `xml:"snapshot"`
-	Config      *DomainDiskSourceNetworkConfig    `xml:"config"`
-	Reconnect   *DomainDiskSourceNetworkReconnect `xml:"reconnect"`
-	Auth        *DomainDiskAuth                   `xml:"auth"`
+	Protocol    string                             `xml:"protocol,attr,omitempty"`
+	Name        string                             `xml:"name,attr,omitempty"`
+	Query       string                             `xml:"query,attr,omitempty"`
+	TLS         string                             `xml:"tls,attr,omitempty"`
+	TLSHostname string                             `xml:"tlsHostname,attr,omitempty"`
+	Hosts       []DomainDiskSourceHost             `xml:"host"`
+	Identity    *DomainDiskSourceNetworkIdentity   `xml:"identity"`
+	KnownHosts  *DomainDiskSourceNetworkKnownHosts `xml:"knownHosts"`
+	Initiator   *DomainDiskSourceNetworkInitiator  `xml:"initiator"`
+	Snapshot    *DomainDiskSourceNetworkSnapshot   `xml:"snapshot"`
+	Config      *DomainDiskSourceNetworkConfig     `xml:"config"`
+	Reconnect   *DomainDiskSourceNetworkReconnect  `xml:"reconnect"`
+	Auth        *DomainDiskAuth                    `xml:"auth"`
+}
+
+type DomainDiskSourceNetworkKnownHosts struct {
+	Path string `xml:"path,attr"`
 }
 
 type DomainDiskSourceNetworkIdentity struct {
-	User  string `xml:"user,attr"`
-	Group string `xml:"group,attr"`
+	User      string `xml:"user,attr,omitempty"`
+	Group     string `xml:"group,attr,omitempty"`
+	UserName  string `xml:"username,attr,omitempty"`
+	Keyfile   string `xml:"keyfile,attr,omitempty"`
+	AgentSock string `xml:"agentsock,attr,omitempty"`
 }
 
 type DomainDiskSourceNetworkInitiator struct {
