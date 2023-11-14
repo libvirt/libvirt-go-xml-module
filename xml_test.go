@@ -435,7 +435,7 @@ func syncGit(t *testing.T) {
 		defer func() {
 			os.Chdir(here)
 		}()
-		msg, err := exec.Command("git", "pull").CombinedOutput()
+		msg, err := exec.Command("git", "fetch", "origin").CombinedOutput()
 		if err != nil {
 			t.Fatal(fmt.Errorf("Unable to update libvirt.git: %s: %s", err, msg))
 		}
@@ -446,7 +446,7 @@ func syncGit(t *testing.T) {
 
 		ref := os.Getenv("LIBVIRT_REF")
 		if ref == "" {
-			ref = "master"
+			ref = "origin/master"
 		}
 		msg, err = exec.Command("git", "checkout", "--force", ref).CombinedOutput()
 		if err != nil {
