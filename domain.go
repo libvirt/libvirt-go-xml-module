@@ -1523,6 +1523,7 @@ type DomainAudio struct {
 	SPICE       *DomainAudioSPICE      `xml:"-"`
 	File        *DomainAudioFile       `xml:"-"`
 	DBus        *DomainAudioDBus       `xml:"-"`
+	PipeWire    *DomainAudioPipeWire   `xml:"-"`
 }
 
 type DomainAudioChannel struct {
@@ -1604,6 +1605,19 @@ type DomainAudioPulseAudio struct {
 }
 
 type DomainAudioPulseAudioChannel struct {
+	DomainAudioChannel
+	Name       string `xml:"name,attr,omitempty"`
+	StreamName string `xml:"streamName,attr,omitempty"`
+	Latency    uint   `xml:"latency,attr,omitempty"`
+}
+
+type DomainAudioPipeWire struct {
+	RuntimeDir string                        `xml:"runtimeDir,attr,omitempty"`
+	Input      *DomainAudioPulseAudioChannel `xml:"input"`
+	Output     *DomainAudioPulseAudioChannel `xml:"output"`
+}
+
+type DomainAudioPipeWireChannel struct {
 	DomainAudioChannel
 	Name       string `xml:"name,attr,omitempty"`
 	StreamName string `xml:"streamName,attr,omitempty"`
@@ -5765,6 +5779,11 @@ func (a *DomainAudio) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 			xml.Name{Local: "type"}, "dbus",
 		})
 		return e.EncodeElement(a.DBus, start)
+	} else if a.PipeWire != nil {
+		start.Attr = append(start.Attr, xml.Attr{
+			xml.Name{Local: "type"}, "pipewire",
+		})
+		return e.EncodeElement(a.PipeWire, start)
 	}
 	return nil
 }
@@ -5871,6 +5890,14 @@ func (a *DomainAudio) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 			return err
 		}
 		a.DBus = &dbus
+		return nil
+	} else if typ == "pipewire" {
+		var pipewire DomainAudioPipeWire
+		err := d.DecodeElement(&pipewire, &start)
+		if err != nil {
+			return err
+		}
+		a.PipeWire = &pipewire
 		return nil
 	}
 	return nil
