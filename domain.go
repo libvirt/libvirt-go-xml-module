@@ -510,6 +510,17 @@ type DomainFilesystemBinary struct {
 	ThreadPool *DomainFilesystemBinaryThreadPool `xml:"thread_pool"`
 }
 
+type DomainFilesystemIDMapEntry struct {
+	Start  uint `xml:"start,attr"`
+	Target uint `xml:"target,attr"`
+	Count  uint `xml:"count,attr"`
+}
+
+type DomainFilesystemIDMap struct {
+	UID []DomainFilesystemIDMapEntry `xml:"uid"`
+	GID []DomainFilesystemIDMapEntry `xml:"gid"`
+}
+
 type DomainFilesystem struct {
 	XMLName        xml.Name                        `xml:"filesystem"`
 	AccessMode     string                          `xml:"accessmode,attr,omitempty"`
@@ -519,6 +530,7 @@ type DomainFilesystem struct {
 	DMode          string                          `xml:"dmode,attr,omitempty"`
 	Driver         *DomainFilesystemDriver         `xml:"driver"`
 	Binary         *DomainFilesystemBinary         `xml:"binary"`
+	IDMap          *DomainFilesystemIDMap          `xml:"idmap"`
 	Source         *DomainFilesystemSource         `xml:"source"`
 	Target         *DomainFilesystemTarget         `xml:"target"`
 	ReadOnly       *DomainFilesystemReadOnly       `xml:"readonly"`
