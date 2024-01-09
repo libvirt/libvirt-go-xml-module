@@ -276,6 +276,19 @@ type DomainDiskMetadataCacheSize struct {
 	Value int    `xml:",cdata"`
 }
 
+type DomainDiskIOThreads struct {
+	IOThread []DomainDiskIOThread `xml:"iothread"`
+}
+
+type DomainDiskIOThread struct {
+	ID     uint                      `xml:"id,attr"`
+	Queues []DomainDiskIOThreadQueue `xml:"queue"`
+}
+
+type DomainDiskIOThreadQueue struct {
+	ID uint `xml:"id,attr"`
+}
+
 type DomainDiskDriver struct {
 	Name           string                   `xml:"name,attr,omitempty"`
 	Type           string                   `xml:"type,attr,omitempty"`
@@ -289,6 +302,7 @@ type DomainDiskDriver struct {
 	Discard        string                   `xml:"discard,attr,omitempty"`
 	DiscardNoUnref string                   `xml:"discard_no_unref,attr,omitempty"`
 	IOThread       *uint                    `xml:"iothread,attr"`
+	IOThreads      *DomainDiskIOThreads     `xml:"iothreads"`
 	DetectZeros    string                   `xml:"detect_zeroes,attr,omitempty"`
 	Queues         *uint                    `xml:"queues,attr"`
 	QueueSize      *uint                    `xml:"queue_size,attr"`
