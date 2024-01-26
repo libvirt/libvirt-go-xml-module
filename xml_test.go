@@ -71,8 +71,7 @@ var xmldirs = []string{
 	"testdata/libvirt/tests/qemuhotplugtestdevices",
 	"testdata/libvirt/tests/qemuhotplugtestdomains",
 	"testdata/libvirt/tests/qemumemlockdata",
-	"testdata/libvirt/tests/qemuxml2argvdata",
-	"testdata/libvirt/tests/qemuxml2xmloutdata",
+	"testdata/libvirt/tests/qemuxmlconfdata",
 	"testdata/libvirt/tests/secretxml2xmlin",
 	"testdata/libvirt/tests/securityselinuxlabeldata",
 	"testdata/libvirt/tests/storagepoolschemadata",
@@ -99,7 +98,7 @@ var blacklist = map[string]bool{
 	// intentionally invalid xml
 	"testdata/libvirt/tests/genericxml2xmlindata/chardev-unix-redirdev-missing-path.xml":  true,
 	"testdata/libvirt/tests/genericxml2xmlindata/chardev-unix-rng-missing-path.xml":       true,
-	"testdata/libvirt/tests/qemuxml2argvdata/virtio-rng-egd-crash.xml":                    true,
+	"testdata/libvirt/tests/qemuxmlconfdata/virtio-rng-egd-crash.xml":                     true,
 	"testdata/libvirt/tests/genericxml2xmlindata/chardev-unix-smartcard-missing-path.xml": true,
 	"testdata/libvirt/tests/genericxml2xmlindata/chardev-tcp-multiple-source.xml":         true,
 	"testdata/libvirt/tests/networkxml2xmlupdatein/dns-host-gateway-incomplete.xml":       true,
@@ -112,27 +111,27 @@ var blacklist = map[string]bool{
 
 var extraActualNodes = map[string][]string{
 
-	"testdata/libvirt/tests/qemuxml2argvdata/disk-discard.xml": []string{
+	"testdata/libvirt/tests/qemuxmlconfdata/disk-discard.xml": []string{
 		"/domain[0]/devices[0]/disk[0]/@type",
 	},
-	"testdata/libvirt/tests/qemuxml2argvdata/fs9p-ccw.xml": []string{
+	"testdata/libvirt/tests/qemuxmlconfdata/fs9p-ccw.xml": []string{
 		"/domain[0]/devices[0]/filesystem[1]/@type",
 		"/domain[0]/devices[0]/filesystem[2]/@type",
 	},
-	"testdata/libvirt/tests/qemuxml2argvdata/fs9p.xml": []string{
+	"testdata/libvirt/tests/qemuxmlconfdata/fs9p.xml": []string{
 		"/domain[0]/devices[0]/filesystem[1]/@type",
 		"/domain[0]/devices[0]/filesystem[2]/@type",
 	},
-	"testdata/libvirt/tests/qemuxml2argvdata/disk-drive-discard.xml": []string{
+	"testdata/libvirt/tests/qemuxmlconfdata/disk-drive-discard.xml": []string{
 		"/domain[0]/devices[0]/disk[0]/@type",
 	},
-	"testdata/libvirt/tests/qemuxml2argvdata/disk-discard_no_unref.xml": []string{
+	"testdata/libvirt/tests/qemuxmlconfdata/disk-discard_no_unref.xml": []string{
 		"/domain[0]/devices[0]/disk[0]/@type",
 	},
 	"testdata/libvirt/tests/genericxml2xmlindata/chardev-udp.xml": []string{
 		"/domain[0]/devices[0]/channel[0]/source[0]/@mode",
 	},
-	"testdata/libvirt/tests/qemuxml2argvdata/disk-mirror-old.xml": []string{
+	"testdata/libvirt/tests/qemuxmlconfdata/disk-mirror-old.xml": []string{
 		"/domain[0]/devices[0]/disk[0]/mirror[0]/@type",
 		"/domain[0]/devices[0]/disk[0]/mirror[0]/source[0]",
 		"/domain[0]/devices[0]/disk[2]/mirror[0]/@type",
@@ -208,7 +207,7 @@ var extraActualNodes = map[string][]string{
 	"testdata/libvirt/tests/bhyvexml2argvdata/bhyvexml2argv-console-master-slave-not-specified.xml": []string{
 		"/domain[0]/devices[0]/console[0]/source[0]",
 	},
-	"testdata/libvirt/tests/qemuxml2argvdata/graphics-dbus-usbredir.xml": []string{
+	"testdata/libvirt/tests/qemuxmlconfdata/graphics-dbus-usbredir.xml": []string{
 		"/domain[0]/devices[0]/redirdev[0]/source[0]",
 		"/domain[0]/devices[0]/redirdev[1]/source[0]",
 	},
@@ -221,7 +220,7 @@ var extraActualNodes = map[string][]string{
 }
 
 var extraExpectNodes = map[string][]string{
-	"testdata/libvirt/tests/qemuxml2argvdata/usb-redir-filter.xml": []string{
+	"testdata/libvirt/tests/qemuxmlconfdata/usb-redir-filter.xml": []string{
 		"/domain[0]/devices[0]/redirfilter[0]/usbdev[1]/@vendor",
 		"/domain[0]/devices[0]/redirfilter[0]/usbdev[1]/@product",
 		"/domain[0]/devices[0]/redirfilter[0]/usbdev[1]/@class",
