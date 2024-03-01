@@ -1924,13 +1924,14 @@ type DomainMemorydevTargetAddress struct {
 }
 
 type DomainMemorydevTarget struct {
-	Size      *DomainMemorydevTargetSize      `xml:"size"`
-	Node      *DomainMemorydevTargetNode      `xml:"node"`
-	Label     *DomainMemorydevTargetLabel     `xml:"label"`
-	Block     *DomainMemorydevTargetBlock     `xml:"block"`
-	Requested *DomainMemorydevTargetRequested `xml:"requested"`
-	ReadOnly  *DomainMemorydevTargetReadOnly  `xml:"readonly"`
-	Address   *DomainMemorydevTargetAddress   `xml:"address"`
+	DynamicMemslots string                          `xml:"dynamicMemslots,attr,omitempty"`
+	Size            *DomainMemorydevTargetSize      `xml:"size"`
+	Node            *DomainMemorydevTargetNode      `xml:"node"`
+	Label           *DomainMemorydevTargetLabel     `xml:"label"`
+	Block           *DomainMemorydevTargetBlock     `xml:"block"`
+	Requested       *DomainMemorydevTargetRequested `xml:"requested"`
+	ReadOnly        *DomainMemorydevTargetReadOnly  `xml:"readonly"`
+	Address         *DomainMemorydevTargetAddress   `xml:"address"`
 }
 
 type DomainMemorydev struct {
