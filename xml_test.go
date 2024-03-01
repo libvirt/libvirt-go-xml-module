@@ -138,6 +138,24 @@ var extraActualNodes = map[string][]string{
 		"/domain[0]/devices[0]/disk[2]/mirror[0]/format[0]",
 		"/domain[0]/devices[0]/disk[2]/mirror[0]/source[0]",
 	},
+	"testdata/libvirt/tests/qemuxmlconfdata/aarch64-virt-default-models.xml": []string{
+		"/domain[0]/devices[0]/video[0]/model[0]",
+	},
+	"testdata/libvirt/tests/qemuxmlconfdata/ppc64-pseries-default-models.xml": []string{
+		"/domain[0]/devices[0]/video[0]/model[0]",
+	},
+	"testdata/libvirt/tests/qemuxmlconfdata/riscv64-virt-default-models.xml": []string{
+		"/domain[0]/devices[0]/video[0]/model[0]",
+	},
+	"testdata/libvirt/tests/qemuxmlconfdata/s390x-ccw-default-models.xml": []string{
+		"/domain[0]/devices[0]/video[0]/model[0]",
+	},
+	"testdata/libvirt/tests/qemuxmlconfdata/x86_64-pc-default-models.xml": []string{
+		"/domain[0]/devices[0]/video[0]/model[0]",
+	},
+	"testdata/libvirt/tests/qemuxmlconfdata/x86_64-q35-default-models.xml": []string{
+		"/domain[0]/devices[0]/video[0]/model[0]",
+	},
 	"testdata/libvirt/tests/xlconfigdata/test-fullvirt-ovswitch-tagged.xml": []string{
 		"/domain[0]/devices[0]/interface[0]/virtualport[0]/parameters[0]",
 	},
