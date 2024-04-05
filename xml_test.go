@@ -141,6 +141,9 @@ var extraActualNodes = map[string][]string{
 	"testdata/libvirt/tests/qemuxmlconfdata/aarch64-virt-default-models.xml": []string{
 		"/domain[0]/devices[0]/video[0]/model[0]",
 	},
+	"testdata/libvirt/tests/qemuxmlconfdata/loongarch64-virt-default-models.xml": []string{
+		"/domain[0]/devices[0]/video[0]/model[0]",
+	},
 	"testdata/libvirt/tests/qemuxmlconfdata/ppc64-pseries-default-models.xml": []string{
 		"/domain[0]/devices[0]/video[0]/model[0]",
 	},
