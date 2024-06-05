@@ -2734,6 +2734,7 @@ type DomainFeatureList struct {
 	IBS           *DomainFeatureIBS           `xml:"ibs"`
 	TCG           *DomainFeatureTCG           `xml:"tcg"`
 	AsyncTeardown *DomainFeatureAsyncTeardown `xml:"async-teardown"`
+	RAS           *DomainFeatureState         `xml:"ras"`
 }
 
 type DomainCPUTuneShares struct {
