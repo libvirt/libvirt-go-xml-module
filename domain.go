@@ -1525,6 +1525,7 @@ type DomainSound struct {
 	XMLName      xml.Name           `xml:"sound"`
 	Model        string             `xml:"model,attr"`
 	MultiChannel string             `xml:"multichannel,attr,omitempty"`
+	Streams      uint               `xml:"streams,attr,omitempty"`
 	Codec        []DomainSoundCodec `xml:"codec"`
 	Audio        *DomainSoundAudio  `xml:"audio"`
 	ACPI         *DomainDeviceACPI  `xml:"acpi"`
