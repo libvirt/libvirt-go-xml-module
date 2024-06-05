@@ -1517,6 +1517,13 @@ type DomainPanic struct {
 	Address *DomainAddress    `xml:"address"`
 }
 
+type DomainSoundDriver struct {
+	IOMMU     string `xml:"iommu,attr,omitempty"`
+	ATS       string `xml:"ats,attr,omitempty"`
+	Packed    string `xml:"packed,attr,omitempty"`
+	PagePerVQ string `xml:"page_per_vq,attr,omitempty"`
+}
+
 type DomainSoundCodec struct {
 	Type string `xml:"type,attr"`
 }
@@ -1530,6 +1537,7 @@ type DomainSound struct {
 	Audio        *DomainSoundAudio  `xml:"audio"`
 	ACPI         *DomainDeviceACPI  `xml:"acpi"`
 	Alias        *DomainAlias       `xml:"alias"`
+	Driver       *DomainSoundDriver `xml:"driver"`
 	Address      *DomainAddress     `xml:"address"`
 }
 
