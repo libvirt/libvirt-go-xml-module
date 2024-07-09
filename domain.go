@@ -666,9 +666,9 @@ type DomainInterfaceSourceNull struct {
 
 type DomainInterfaceSourceVDS struct {
 	SwitchID     string `xml:"switchid,attr"`
-	PortID       int    `xml:"portid,attr"`
-	PortGroupID  string `xml:"portgroupid,attr"`
-	ConnectionID int    `xml:"connectionid,attr"`
+	PortID       int    `xml:"portid,attr,omitempty"`
+	PortGroupID  string `xml:"portgroupid,attr,omitempty"`
+	ConnectionID int    `xml:"connectionid,attr,omitempty"`
 }
 
 type DomainInterfaceSourceLocal struct {
