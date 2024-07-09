@@ -2050,6 +2050,7 @@ type DomainTPMBackendEmulator struct {
 	Version         string                      `xml:"version,attr,omitempty"`
 	Encryption      *DomainTPMBackendEncryption `xml:"encryption"`
 	PersistentState string                      `xml:"persistent_state,attr,omitempty"`
+	Debug           uint                        `xml:"debug,attr,omitempty"`
 	ActivePCRBanks  *DomainTPMBackendPCRBanks   `xml:"active_pcr_banks"`
 }
 
