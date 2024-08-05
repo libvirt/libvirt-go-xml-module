@@ -516,6 +516,10 @@ type DomainFilesystemBinaryThreadPool struct {
 	Size uint `xml:"size,attr,omitempty"`
 }
 
+type DomainFilesystemBinaryOpenFiles struct {
+	Max uint `xml:"max,attr,"`
+}
+
 type DomainFilesystemBinary struct {
 	Path       string                            `xml:"path,attr,omitempty"`
 	XAttr      string                            `xml:"xattr,attr,omitempty"`
@@ -523,6 +527,7 @@ type DomainFilesystemBinary struct {
 	Sandbox    *DomainFilesystemBinarySandbox    `xml:"sandbox"`
 	Lock       *DomainFilesystemBinaryLock       `xml:"lock"`
 	ThreadPool *DomainFilesystemBinaryThreadPool `xml:"thread_pool"`
+	OpenFiles  *DomainFilesystemBinaryOpenFiles  `xml:"openfiles"`
 }
 
 type DomainFilesystemIDMapEntry struct {
