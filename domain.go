@@ -2130,6 +2130,20 @@ type DomainCryptoBackendBuiltIn struct {
 type DomainCryptoBackendLKCF struct {
 }
 
+type DomainPStore struct {
+	Backend string            `xml:"backend,attr"`
+	Path    string            `xml:"path"`
+	Size    DomainPStoreSize  `xml:"size"`
+	ACPI    *DomainDeviceACPI `xml:"acpi"`
+	Alias   *DomainAlias      `xml:"alias"`
+	Address *DomainAddress    `xml:"address"`
+}
+
+type DomainPStoreSize struct {
+	Size uint64 `xml:",chardata"`
+	Unit string `xml:"unit,attr"`
+}
+
 type DomainDeviceList struct {
 	Emulator     string              `xml:"emulator,omitempty"`
 	Disks        []DomainDisk        `xml:"disk"`
@@ -2162,6 +2176,7 @@ type DomainDeviceList struct {
 	IOMMU        *DomainIOMMU        `xml:"iommu"`
 	VSock        *DomainVSock        `xml:"vsock"`
 	Crypto       []DomainCrypto      `xml:"crypto"`
+	PStore       *DomainPStore       `xml:"pstore"`
 }
 
 type DomainMemory struct {
