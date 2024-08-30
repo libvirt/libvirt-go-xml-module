@@ -2588,6 +2588,8 @@ type DomainFeatureHyperV struct {
 	IPI             *DomainFeatureState           `xml:"ipi"`
 	EVMCS           *DomainFeatureState           `xml:"evmcs"`
 	AVIC            *DomainFeatureState           `xml:"avic"`
+	EMSRBitmap      *DomainFeatureState           `xml:"emsr_bitmap"`
+	XMMInput        *DomainFeatureState           `xml:"xmm_input"`
 }
 
 type DomainFeatureKVMDirtyRing struct {
