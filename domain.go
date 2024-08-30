@@ -2782,6 +2782,7 @@ type DomainFeatureList struct {
 	TCG           *DomainFeatureTCG           `xml:"tcg"`
 	AsyncTeardown *DomainFeatureAsyncTeardown `xml:"async-teardown"`
 	RAS           *DomainFeatureState         `xml:"ras"`
+	PS2           *DomainFeatureState         `xml:"ps2"`
 }
 
 type DomainCPUTuneShares struct {
