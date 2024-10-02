@@ -238,6 +238,9 @@ var extraActualNodes = map[string][]string{
 	"testdata/libvirt/tests/xml2vmxdata/xml2vmx-ethernet-null.xml": []string{
 		"/domain[0]/devices[0]/interface[0]/source[0]",
 	},
+	"testdata/libvirt/tests/vmx2xmldata/esx-in-the-wild-14.xml": []string{
+		"/domain[0]/devices[0]/interface[0]/source[0]",
+	},
 }
 
 var extraExpectNodes = map[string][]string{
