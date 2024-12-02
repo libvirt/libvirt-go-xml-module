@@ -2255,10 +2255,11 @@ type DomainSMBios struct {
 }
 
 type DomainNVRam struct {
-	NVRam    string            `xml:",chardata"`
-	Source   *DomainDiskSource `xml:"source"`
-	Template string            `xml:"template,attr,omitempty"`
-	Format   string            `xml:"format,attr,omitempty"`
+	NVRam          string            `xml:",chardata"`
+	Source         *DomainDiskSource `xml:"source"`
+	Template       string            `xml:"template,attr,omitempty"`
+	Format         string            `xml:"format,attr,omitempty"`
+	TemplateFormat string            `xml:"templateFormat,attr,omitempty"`
 }
 
 type DomainBootDevice struct {
