@@ -129,6 +129,7 @@ type DomainCapsDevices struct {
 	Channel    *DomainCapsDevice `xml:"channel"`
 	Crypto     *DomainCapsDevice `xml:"crypto"`
 	Interface  *DomainCapsDevice `xml:"interface"`
+	Panic      *DomainCapsDevice `xml:"panic"`
 }
 
 type DomainCapsDevice struct {
