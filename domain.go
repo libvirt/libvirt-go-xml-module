@@ -170,6 +170,12 @@ type DomainDiskSource struct {
 	Cookies       *DomainDiskCookies         `xml:"cookies"`
 	Readahead     *DomainDiskSourceReadahead `xml:"readahead"`
 	Timeout       *DomainDiskSourceTimeout   `xml:"timeout"`
+	DataStore     *DomainDiskDataStore       `xml:"dataStore"`
+}
+
+type DomainDiskDataStore struct {
+	Format *DomainDiskFormat `xml:"format"`
+	Source *DomainDiskSource `xml:"source"`
 }
 
 type DomainDiskSlices struct {
@@ -3710,6 +3716,78 @@ func (a *DomainDiskBackingStore) UnmarshalXML(d *xml.Decoder, start xml.StartEle
 		return err
 	}
 	*a = DomainDiskBackingStore(disk)
+	if !ok && a.Source.File.File == "" {
+		a.Source.File = nil
+	}
+	return nil
+}
+
+type domainDiskDataStore DomainDiskDataStore
+
+func (a *DomainDiskDataStore) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	start.Name.Local = "dataStore"
+	if a.Source != nil {
+		if a.Source.File != nil {
+			start.Attr = append(start.Attr, xml.Attr{
+				xml.Name{Local: "type"}, "file",
+			})
+		} else if a.Source.Block != nil {
+			start.Attr = append(start.Attr, xml.Attr{
+				xml.Name{Local: "type"}, "block",
+			})
+		} else if a.Source.Dir != nil {
+			start.Attr = append(start.Attr, xml.Attr{
+				xml.Name{Local: "type"}, "dir",
+			})
+		} else if a.Source.Network != nil {
+			start.Attr = append(start.Attr, xml.Attr{
+				xml.Name{Local: "type"}, "network",
+			})
+		} else if a.Source.Volume != nil {
+			start.Attr = append(start.Attr, xml.Attr{
+				xml.Name{Local: "type"}, "volume",
+			})
+		} else if a.Source.VHostUser != nil {
+			start.Attr = append(start.Attr, xml.Attr{
+				xml.Name{Local: "type"}, "vhostuser",
+			})
+		} else if a.Source.VHostVDPA != nil {
+			start.Attr = append(start.Attr, xml.Attr{
+				xml.Name{Local: "type"}, "vhostvdpa",
+			})
+		}
+	}
+	disk := domainDiskDataStore(*a)
+	return e.EncodeElement(disk, start)
+}
+
+func (a *DomainDiskDataStore) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	typ, ok := getAttr(start.Attr, "type")
+	if !ok {
+		typ = "file"
+	}
+	a.Source = &DomainDiskSource{}
+	if typ == "file" {
+		a.Source.File = &DomainDiskSourceFile{}
+	} else if typ == "block" {
+		a.Source.Block = &DomainDiskSourceBlock{}
+	} else if typ == "network" {
+		a.Source.Network = &DomainDiskSourceNetwork{}
+	} else if typ == "dir" {
+		a.Source.Dir = &DomainDiskSourceDir{}
+	} else if typ == "volume" {
+		a.Source.Volume = &DomainDiskSourceVolume{}
+	} else if typ == "vhostuser" {
+		a.Source.VHostUser = &DomainDiskSourceVHostUser{}
+	} else if typ == "vhostvdpa" {
+		a.Source.VHostVDPA = &DomainDiskSourceVHostVDPA{}
+	}
+	disk := domainDiskDataStore(*a)
+	err := d.DecodeElement(&disk, &start)
+	if err != nil {
+		return err
+	}
+	*a = DomainDiskDataStore(disk)
 	if !ok && a.Source.File.File == "" {
 		a.Source.File = nil
 	}
