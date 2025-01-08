@@ -2600,6 +2600,12 @@ type DomainFeatureHyperVSTimer struct {
 	Direct *DomainFeatureState `xml:"direct"`
 }
 
+type DomainFeatureHyperVTLBFlush struct {
+	DomainFeatureState
+	Direct   *DomainFeatureState `xml:"direct"`
+	Extended *DomainFeatureState `xml:"extended"`
+}
+
 type DomainFeatureHyperV struct {
 	DomainFeature
 	Mode            string                        `xml:"mode,attr,omitempty"`
@@ -2614,7 +2620,7 @@ type DomainFeatureHyperV struct {
 	VendorId        *DomainFeatureHyperVVendorId  `xml:"vendor_id"`
 	Frequencies     *DomainFeatureState           `xml:"frequencies"`
 	ReEnlightenment *DomainFeatureState           `xml:"reenlightenment"`
-	TLBFlush        *DomainFeatureState           `xml:"tlbflush"`
+	TLBFlush        *DomainFeatureHyperVTLBFlush  `xml:"tlbflush"`
 	IPI             *DomainFeatureState           `xml:"ipi"`
 	EVMCS           *DomainFeatureState           `xml:"evmcs"`
 	AVIC            *DomainFeatureState           `xml:"avic"`
