@@ -2064,6 +2064,13 @@ type DomainTPMBackendEmulator struct {
 	PersistentState string                      `xml:"persistent_state,attr,omitempty"`
 	Debug           uint                        `xml:"debug,attr,omitempty"`
 	ActivePCRBanks  *DomainTPMBackendPCRBanks   `xml:"active_pcr_banks"`
+	Profile         *DomainTPMBackendProfile    `xml:"profile"`
+}
+
+type DomainTPMBackendProfile struct {
+	Source         string `xml:"source,attr,omitempty"`
+	RemoveDisabled string `xml:"removeDisabled,attr,omitempty"`
+	Name           string `xml:"name,attr,omitempty"`
 }
 
 type DomainTPMBackendPCRBanks struct {
