@@ -2064,6 +2064,7 @@ type DomainTPMBackendEmulator struct {
 	PersistentState string                      `xml:"persistent_state,attr,omitempty"`
 	Debug           uint                        `xml:"debug,attr,omitempty"`
 	ActivePCRBanks  *DomainTPMBackendPCRBanks   `xml:"active_pcr_banks"`
+	Source          *DomainTPMBackendSource     `xml:"source"`
 	Profile         *DomainTPMBackendProfile    `xml:"profile"`
 }
 
@@ -2071,6 +2072,19 @@ type DomainTPMBackendProfile struct {
 	Source         string `xml:"source,attr,omitempty"`
 	RemoveDisabled string `xml:"removeDisabled,attr,omitempty"`
 	Name           string `xml:"name,attr,omitempty"`
+}
+
+type DomainTPMBackendSource struct {
+	File *DomainTPMBackendSourceFile `xml:"-"`
+	Dir  *DomainTPMBackendSourceDir  `xml:"-"`
+}
+
+type DomainTPMBackendSourceFile struct {
+	Path string `xml:"path,attr,omitempty"`
+}
+
+type DomainTPMBackendSourceDir struct {
+	Path string `xml:"path,attr,omitempty"`
 }
 
 type DomainTPMBackendPCRBanks struct {
@@ -4694,6 +4708,51 @@ func (a *DomainTPMBackend) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 	} else if typ == "external" {
 		a.External = &DomainTPMBackendExternal{}
 		err := d.DecodeElement(a.External, &start)
+		if err != nil {
+			return err
+		}
+	} else {
+		d.Skip()
+	}
+	return nil
+}
+
+func (a *DomainTPMBackendSource) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	start.Name.Local = "source"
+	if a.File != nil {
+		start.Attr = append(start.Attr, xml.Attr{
+			xml.Name{Local: "type"}, "file",
+		})
+		err := e.EncodeElement(a.File, start)
+		if err != nil {
+			return err
+		}
+	} else if a.Dir != nil {
+		start.Attr = append(start.Attr, xml.Attr{
+			xml.Name{Local: "type"}, "dir",
+		})
+		err := e.EncodeElement(a.Dir, start)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func (a *DomainTPMBackendSource) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	typ, ok := getAttr(start.Attr, "type")
+	if !ok {
+		return fmt.Errorf("Missing TPM source type")
+	}
+	if typ == "file" {
+		a.File = &DomainTPMBackendSourceFile{}
+		err := d.DecodeElement(a.File, &start)
+		if err != nil {
+			return err
+		}
+	} else if typ == "dir" {
+		a.Dir = &DomainTPMBackendSourceDir{}
+		err := d.DecodeElement(a.Dir, &start)
 		if err != nil {
 			return err
 		}
