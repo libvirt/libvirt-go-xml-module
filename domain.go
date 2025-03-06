@@ -2793,6 +2793,10 @@ type DomainFeatureAsyncTeardown struct {
 	Enabled string `xml:"enabled,attr,omitempty"`
 }
 
+type DomainFeatureAIA struct {
+	Value string `xml:"value,attr"`
+}
+
 type DomainFeatureList struct {
 	PAE           *DomainFeature              `xml:"pae"`
 	ACPI          *DomainFeature              `xml:"acpi"`
@@ -2823,6 +2827,7 @@ type DomainFeatureList struct {
 	AsyncTeardown *DomainFeatureAsyncTeardown `xml:"async-teardown"`
 	RAS           *DomainFeatureState         `xml:"ras"`
 	PS2           *DomainFeatureState         `xml:"ps2"`
+	AIA           *DomainFeatureAIA           `xml:"aia"`
 }
 
 type DomainCPUTuneShares struct {
