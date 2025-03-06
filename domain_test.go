@@ -1712,10 +1712,12 @@ var domainTestData = []struct {
 							Type: "virtio",
 						},
 						Source: &DomainInterfaceSource{
-							VHostUser: &DomainChardevSource{
-								UNIX: &DomainChardevSourceUNIX{
-									Path: "/tmp/vhost0.sock",
-									Mode: "server",
+							VHostUser: &DomainInterfaceSourceVHostUser{
+								Chardev: &DomainChardevSource{
+									UNIX: &DomainChardevSourceUNIX{
+										Path: "/tmp/vhost0.sock",
+										Mode: "server",
+									},
 								},
 							},
 						},
@@ -1750,10 +1752,12 @@ var domainTestData = []struct {
 							Type: "virtio",
 						},
 						Source: &DomainInterfaceSource{
-							VHostUser: &DomainChardevSource{
-								UNIX: &DomainChardevSourceUNIX{
-									Path: "/tmp/vhost0.sock",
-									Mode: "server",
+							VHostUser: &DomainInterfaceSourceVHostUser{
+								Chardev: &DomainChardevSource{
+									UNIX: &DomainChardevSourceUNIX{
+										Path: "/tmp/vhost0.sock",
+										Mode: "server",
+									},
 								},
 							},
 						},

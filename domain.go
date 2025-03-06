@@ -578,22 +578,27 @@ type DomainInterfaceModel struct {
 	Type string `xml:"type,attr"`
 }
 
+type DomainInterfaceSourceVHostUser struct {
+	Chardev *DomainChardevSource `xml:"-"`
+	Dev     string               `xml:"-"`
+}
+
 type DomainInterfaceSource struct {
-	User      *DomainInterfaceSourceUser     `xml:"-"`
-	Ethernet  *DomainInterfaceSourceEthernet `xml:"-"`
-	VHostUser *DomainChardevSource           `xml:"-"`
-	Server    *DomainInterfaceSourceServer   `xml:"-"`
-	Client    *DomainInterfaceSourceClient   `xml:"-"`
-	MCast     *DomainInterfaceSourceMCast    `xml:"-"`
-	Network   *DomainInterfaceSourceNetwork  `xml:"-"`
-	Bridge    *DomainInterfaceSourceBridge   `xml:"-"`
-	Internal  *DomainInterfaceSourceInternal `xml:"-"`
-	Direct    *DomainInterfaceSourceDirect   `xml:"-"`
-	Hostdev   *DomainInterfaceSourceHostdev  `xml:"-"`
-	UDP       *DomainInterfaceSourceUDP      `xml:"-"`
-	VDPA      *DomainInterfaceSourceVDPA     `xml:"-"`
-	Null      *DomainInterfaceSourceNull     `xml:"-"`
-	VDS       *DomainInterfaceSourceVDS      `xml:"-"`
+	User      *DomainInterfaceSourceUser      `xml:"-"`
+	Ethernet  *DomainInterfaceSourceEthernet  `xml:"-"`
+	VHostUser *DomainInterfaceSourceVHostUser `xml:"-"`
+	Server    *DomainInterfaceSourceServer    `xml:"-"`
+	Client    *DomainInterfaceSourceClient    `xml:"-"`
+	MCast     *DomainInterfaceSourceMCast     `xml:"-"`
+	Network   *DomainInterfaceSourceNetwork   `xml:"-"`
+	Bridge    *DomainInterfaceSourceBridge    `xml:"-"`
+	Internal  *DomainInterfaceSourceInternal  `xml:"-"`
+	Direct    *DomainInterfaceSourceDirect    `xml:"-"`
+	Hostdev   *DomainInterfaceSourceHostdev   `xml:"-"`
+	UDP       *DomainInterfaceSourceUDP       `xml:"-"`
+	VDPA      *DomainInterfaceSourceVDPA      `xml:"-"`
+	Null      *DomainInterfaceSourceNull      `xml:"-"`
+	VDS       *DomainInterfaceSourceVDS       `xml:"-"`
 }
 
 type DomainInterfaceSourceUser struct {
@@ -4360,6 +4365,43 @@ func (a *DomainInterfaceSourceHostdev) UnmarshalXML(d *xml.Decoder, start xml.St
 	return nil
 }
 
+func (a *DomainInterfaceSourceVHostUser) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	if a.Chardev != nil {
+		typ := getChardevSourceType(a.Chardev)
+		if typ != "" {
+			start.Attr = append(start.Attr, xml.Attr{
+				xml.Name{Local: "type"}, typ,
+			})
+		}
+		return e.EncodeElement(a.Chardev, start)
+	} else if a.Dev != "" {
+		start.Attr = append(start.Attr, xml.Attr{
+			xml.Name{Local: "dev"}, a.Dev,
+		})
+		e.EncodeToken(start)
+		e.EncodeToken(start.End())
+		e.Flush()
+	}
+	return nil
+}
+
+func (a *DomainInterfaceSourceVHostUser) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	dev, ok := getAttr(start.Attr, "dev")
+	if ok {
+		a.Dev = dev
+		d.Skip()
+		return nil
+	} else {
+		typ, ok := getAttr(start.Attr, "type")
+		if !ok {
+			typ = "unix"
+		}
+		a.Chardev = createChardevSource(typ)
+		d.DecodeElement(a.Chardev, &start)
+	}
+	return nil
+}
+
 func (a *DomainInterfaceSource) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if a.User != nil {
 		if a.User.Dev != "" {
@@ -4373,12 +4415,6 @@ func (a *DomainInterfaceSource) MarshalXML(e *xml.Encoder, start xml.StartElemen
 		}
 		return nil
 	} else if a.VHostUser != nil {
-		typ := getChardevSourceType(a.VHostUser)
-		if typ != "" {
-			start.Attr = append(start.Attr, xml.Attr{
-				xml.Name{Local: "type"}, typ,
-			})
-		}
 		return e.EncodeElement(a.VHostUser, start)
 	} else if a.Server != nil {
 		return e.EncodeElement(a.Server, start)
@@ -4414,11 +4450,6 @@ func (a *DomainInterfaceSource) UnmarshalXML(d *xml.Decoder, start xml.StartElem
 	} else if a.Ethernet != nil {
 		return d.DecodeElement(a.Ethernet, &start)
 	} else if a.VHostUser != nil {
-		typ, ok := getAttr(start.Attr, "type")
-		if !ok {
-			typ = "pty"
-		}
-		a.VHostUser = createChardevSource(typ)
 		return d.DecodeElement(a.VHostUser, &start)
 	} else if a.Server != nil {
 		return d.DecodeElement(a.Server, &start)
@@ -4530,7 +4561,7 @@ func (a *DomainInterface) UnmarshalXML(d *xml.Decoder, start xml.StartElement) e
 	} else if typ == "ethernet" {
 		a.Source.Ethernet = &DomainInterfaceSourceEthernet{}
 	} else if typ == "vhostuser" {
-		a.Source.VHostUser = &DomainChardevSource{}
+		a.Source.VHostUser = &DomainInterfaceSourceVHostUser{}
 	} else if typ == "server" {
 		a.Source.Server = &DomainInterfaceSourceServer{}
 	} else if typ == "client" {
