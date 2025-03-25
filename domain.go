@@ -1786,8 +1786,15 @@ type DomainHostdevSubsysUSB struct {
 }
 
 type DomainHostdevSubsysUSBSource struct {
-	GuestReset string            `xml:"guestReset,attr,omitempty"`
-	Address    *DomainAddressUSB `xml:"address"`
+	GuestReset    string                        `xml:"guestReset,attr,omitempty"`
+	StartUpPolicy string                        `xml:"startupPolicy,attr,omitempty"`
+	Address       *DomainAddressUSB             `xml:"address"`
+	Product       *DomainHostDevProductVendorID `xml:"product"`
+	Vendor        *DomainHostDevProductVendorID `xml:"vendor"`
+}
+
+type DomainHostDevProductVendorID struct {
+	ID string `xml:"id,attr,omitempty"`
 }
 
 type DomainHostdevSubsysSCSI struct {
@@ -4389,7 +4396,10 @@ func (a *DomainInterfaceSourceHostdev) UnmarshalXML(d *xml.Decoder, start xml.St
 				} else if typ == "usb" {
 					a.USB = &DomainHostdevSubsysUSBSource{
 						"",
+						"",
 						&DomainAddressUSB{},
+						&DomainHostDevProductVendorID{},
+						&DomainHostDevProductVendorID{},
 					}
 					err := d.DecodeElement(a.USB, &tok)
 					if err != nil {

@@ -3583,6 +3583,31 @@ var domainTestData = []struct {
 	},
 	{
 		Object: &DomainHostdev{
+			SubsysUSB: &DomainHostdevSubsysUSB{
+				Source: &DomainHostdevSubsysUSBSource{
+					StartUpPolicy: "optional",
+					GuestReset:    "on",
+					Vendor: &DomainHostDevProductVendorID{
+						ID: "0x1234",
+					},
+					Product: &DomainHostDevProductVendorID{
+						ID: "0xbeef",
+					},
+				},
+			},
+		},
+
+		Expected: []string{
+			`<hostdev mode="subsystem" type="usb">`,
+			`  <source guestReset="on" startupPolicy="optional">`,
+			`    <product id="0xbeef"></product>`,
+			`    <vendor id="0x1234"></vendor>`,
+			`  </source>`,
+			`</hostdev>`,
+		},
+	},
+	{
+		Object: &DomainHostdev{
 			SubsysSCSI: &DomainHostdevSubsysSCSI{
 				SGIO:  "unfiltered",
 				RawIO: "yes",
