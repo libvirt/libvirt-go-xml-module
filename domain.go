@@ -381,6 +381,14 @@ type DomainDiskIOTune struct {
 	GroupName              string `xml:"group_name,omitempty"`
 }
 
+type ThrottleFilter struct {
+	Group string `xml:"group,attr"`
+}
+
+type ThrottleFilters struct {
+	ThrottleFilter []ThrottleFilter `xml:"throttlefilter"`
+}
+
 type DomainDiskGeometry struct {
 	Cylinders uint   `xml:"cyls,attr"`
 	Headers   uint   `xml:"heads,attr"`
@@ -419,34 +427,35 @@ type DomainBackendDomain struct {
 }
 
 type DomainDisk struct {
-	XMLName       xml.Name                `xml:"disk"`
-	Device        string                  `xml:"device,attr,omitempty"`
-	RawIO         string                  `xml:"rawio,attr,omitempty"`
-	SGIO          string                  `xml:"sgio,attr,omitempty"`
-	Snapshot      string                  `xml:"snapshot,attr,omitempty"`
-	Model         string                  `xml:"model,attr,omitempty"`
-	Driver        *DomainDiskDriver       `xml:"driver"`
-	Auth          *DomainDiskAuth         `xml:"auth"`
-	Source        *DomainDiskSource       `xml:"source"`
-	BackingStore  *DomainDiskBackingStore `xml:"backingStore"`
-	BackendDomain *DomainBackendDomain    `xml:"backenddomain"`
-	Geometry      *DomainDiskGeometry     `xml:"geometry"`
-	BlockIO       *DomainDiskBlockIO      `xml:"blockio"`
-	Mirror        *DomainDiskMirror       `xml:"mirror"`
-	Target        *DomainDiskTarget       `xml:"target"`
-	IOTune        *DomainDiskIOTune       `xml:"iotune"`
-	ReadOnly      *DomainDiskReadOnly     `xml:"readonly"`
-	Shareable     *DomainDiskShareable    `xml:"shareable"`
-	Transient     *DomainDiskTransient    `xml:"transient"`
-	Serial        string                  `xml:"serial,omitempty"`
-	WWN           string                  `xml:"wwn,omitempty"`
-	Vendor        string                  `xml:"vendor,omitempty"`
-	Product       string                  `xml:"product,omitempty"`
-	Encryption    *DomainDiskEncryption   `xml:"encryption"`
-	Boot          *DomainDeviceBoot       `xml:"boot"`
-	ACPI          *DomainDeviceACPI       `xml:"acpi"`
-	Alias         *DomainAlias            `xml:"alias"`
-	Address       *DomainAddress          `xml:"address"`
+	XMLName         xml.Name                `xml:"disk"`
+	Device          string                  `xml:"device,attr,omitempty"`
+	RawIO           string                  `xml:"rawio,attr,omitempty"`
+	SGIO            string                  `xml:"sgio,attr,omitempty"`
+	Snapshot        string                  `xml:"snapshot,attr,omitempty"`
+	Model           string                  `xml:"model,attr,omitempty"`
+	Driver          *DomainDiskDriver       `xml:"driver"`
+	Auth            *DomainDiskAuth         `xml:"auth"`
+	Source          *DomainDiskSource       `xml:"source"`
+	BackingStore    *DomainDiskBackingStore `xml:"backingStore"`
+	BackendDomain   *DomainBackendDomain    `xml:"backenddomain"`
+	Geometry        *DomainDiskGeometry     `xml:"geometry"`
+	BlockIO         *DomainDiskBlockIO      `xml:"blockio"`
+	Mirror          *DomainDiskMirror       `xml:"mirror"`
+	Target          *DomainDiskTarget       `xml:"target"`
+	IOTune          *DomainDiskIOTune       `xml:"iotune"`
+	ThrottleFilters *ThrottleFilters        `xml:"throttlefilters"`
+	ReadOnly        *DomainDiskReadOnly     `xml:"readonly"`
+	Shareable       *DomainDiskShareable    `xml:"shareable"`
+	Transient       *DomainDiskTransient    `xml:"transient"`
+	Serial          string                  `xml:"serial,omitempty"`
+	WWN             string                  `xml:"wwn,omitempty"`
+	Vendor          string                  `xml:"vendor,omitempty"`
+	Product         string                  `xml:"product,omitempty"`
+	Encryption      *DomainDiskEncryption   `xml:"encryption"`
+	Boot            *DomainDeviceBoot       `xml:"boot"`
+	ACPI            *DomainDeviceACPI       `xml:"acpi"`
+	Alias           *DomainAlias            `xml:"alias"`
+	Address         *DomainAddress          `xml:"address"`
 }
 
 type DomainFilesystemDriver struct {
@@ -3163,6 +3172,12 @@ type DomainGenID struct {
 	Value string `xml:",chardata"`
 }
 
+type DomainThrottleGroups struct {
+	ThrottleGroups []ThrottleGroup `xml:"throttlegroup"`
+}
+
+type ThrottleGroup DomainDiskIOTune
+
 // NB, try to keep the order of fields in this struct
 // matching the order of XML elements that libvirt
 // will generate when dumping XML.
@@ -3195,6 +3210,7 @@ type Domain struct {
 	BootloaderArgs  string                 `xml:"bootloader_args,omitempty"`
 	OS              *DomainOS              `xml:"os"`
 	IDMap           *DomainIDMap           `xml:"idmap"`
+	ThrottleGroups  *DomainThrottleGroups  `xml:"throttlegroups"`
 	Features        *DomainFeatureList     `xml:"features"`
 	CPU             *DomainCPU             `xml:"cpu"`
 	Clock           *DomainClock           `xml:"clock"`

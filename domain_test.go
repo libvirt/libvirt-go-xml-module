@@ -3872,6 +3872,73 @@ var domainTestData = []struct {
 			`</domain>`,
 		},
 	},
+	{
+		Object: &Domain{
+			Name: "domain_name1",
+			ThrottleGroups: &DomainThrottleGroups{
+				ThrottleGroups: []ThrottleGroup{
+					ThrottleGroup{
+						TotalBytesSec: 125000000,
+						TotalIopsSec:  7000,
+						GroupName:     "test",
+					},
+				},
+			},
+		},
+		Expected: []string{
+			`<domain>`,
+			`  <name>domain_name1</name>`,
+			`  <throttlegroups>`,
+			`    <throttlegroup>`,
+			`      <total_bytes_sec>125000000</total_bytes_sec>`,
+			`      <total_iops_sec>7000</total_iops_sec>`,
+			`      <group_name>test</group_name>`,
+			`    </throttlegroup>`,
+			`  </throttlegroups>`,
+			`</domain>`,
+		},
+	},
+	{
+		Object: &Domain{
+			Name: "domain_name2",
+			Devices: &DomainDeviceList{
+				Disks: []DomainDisk{
+					DomainDisk{
+						Device: "disk",
+						Source: &DomainDiskSource{
+							File: &DomainDiskSourceFile{
+								File: "/var/lib/libvirt/images/demo.qcow2",
+							},
+						},
+						ThrottleFilters: &ThrottleFilters{
+							ThrottleFilter: []ThrottleFilter{
+								ThrottleFilter{
+									Group: "group_1",
+								},
+								ThrottleFilter{
+									Group: "group_2",
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+		Expected: []string{
+			`<domain>`,
+			`  <name>domain_name2</name>`,
+			`  <devices>`,
+			`    <disk type="file" device="disk">`,
+			`      <source file="/var/lib/libvirt/images/demo.qcow2"></source>`,
+			`      <throttlefilters>`,
+			`        <throttlefilter group="group_1"></throttlefilter>`,
+			`        <throttlefilter group="group_2"></throttlefilter>`,
+			`      </throttlefilters>`,
+			`    </disk>`,
+			`  </devices>`,
+			`</domain>`,
+		},
+	},
 }
 
 func TestDomain(t *testing.T) {
