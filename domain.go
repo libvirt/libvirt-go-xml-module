@@ -78,16 +78,30 @@ type DomainControllerXenBus struct {
 	MaxEventChannels uint `xml:"maxEventChannels,attr,omitempty"`
 }
 
+type DomainControllerDriverIOThreads struct {
+	IOThread []DomainControllerDriverIOThread `xml:"iothread"`
+}
+
+type DomainControllerDriverIOThread struct {
+	ID     uint                                  `xml:"id,attr"`
+	Queues []DomainControllerDriverIOThreadQueue `xml:"queue"`
+}
+
+type DomainControllerDriverIOThreadQueue struct {
+	ID uint `xml:"id,attr"`
+}
+
 type DomainControllerDriver struct {
-	Queues     *uint  `xml:"queues,attr"`
-	CmdPerLUN  *uint  `xml:"cmd_per_lun,attr"`
-	MaxSectors *uint  `xml:"max_sectors,attr"`
-	IOEventFD  string `xml:"ioeventfd,attr,omitempty"`
-	IOThread   uint   `xml:"iothread,attr,omitempty"`
-	IOMMU      string `xml:"iommu,attr,omitempty"`
-	ATS        string `xml:"ats,attr,omitempty"`
-	Packed     string `xml:"packed,attr,omitempty"`
-	PagePerVQ  string `xml:"page_per_vq,attr,omitempty"`
+	Queues     *uint                            `xml:"queues,attr"`
+	CmdPerLUN  *uint                            `xml:"cmd_per_lun,attr"`
+	MaxSectors *uint                            `xml:"max_sectors,attr"`
+	IOEventFD  string                           `xml:"ioeventfd,attr,omitempty"`
+	IOThread   uint                             `xml:"iothread,attr,omitempty"`
+	IOMMU      string                           `xml:"iommu,attr,omitempty"`
+	ATS        string                           `xml:"ats,attr,omitempty"`
+	Packed     string                           `xml:"packed,attr,omitempty"`
+	PagePerVQ  string                           `xml:"page_per_vq,attr,omitempty"`
+	IOThreads  *DomainControllerDriverIOThreads `xml:"iothreads"`
 }
 
 type DomainController struct {
