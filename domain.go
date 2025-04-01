@@ -2424,6 +2424,7 @@ type DomainOS struct {
 	Kernel       string                `xml:"kernel,omitempty"`
 	Initrd       string                `xml:"initrd,omitempty"`
 	Cmdline      string                `xml:"cmdline,omitempty"`
+	Shim         string                `xml:"shim,omitempty"`
 	DTB          string                `xml:"dtb,omitempty"`
 	ACPI         *DomainACPI           `xml:"acpi"`
 	BootDevices  []DomainBootDevice    `xml:"boot"`
