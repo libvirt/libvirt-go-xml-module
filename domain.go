@@ -1343,6 +1343,8 @@ type DomainGraphicRDP struct {
 	AutoPort    string                  `xml:"autoport,attr,omitempty"`
 	ReplaceUser string                  `xml:"replaceUser,attr,omitempty"`
 	MultiUser   string                  `xml:"multiUser,attr,omitempty"`
+	Username    string                  `xml:"username,attr,omitempty"`
+	Passwd      string                  `xml:"passwd,attr,omitempty"`
 	Listen      string                  `xml:"listen,attr,omitempty"`
 	Listeners   []DomainGraphicListener `xml:"listen"`
 }
