@@ -253,6 +253,12 @@ var extraExpectNodes = map[string][]string{
 	"testdata/libvirt/tests/domainschemadata/domain-parallels-ct-simple.xml": []string{
 		"/domain[0]/description[0]",
 	},
+	"testdata/libvirt/tests/qemuxmlconfdata/graphics-rdp.x86_64-latest.xml": []string{
+		"/domain[0]/devices[0]/graphics[1]/@port",
+	},
+	"testdata/libvirt/tests/qemuxmlconfdata/graphics-rdp.xml": []string{
+		"/domain[0]/devices[0]/graphics[1]/@port",
+	},
 	"testdata/libvirt/tests/storagevolxml2xmlin/vol-encrypt1.xml":                  []string{volsrc},
 	"testdata/libvirt/tests/storagevolxml2xmlin/vol-encrypt2.xml":                  []string{volsrc},
 	"testdata/libvirt/tests/storagevolxml2xmlin/vol-file-backing.xml":              []string{volsrc},
