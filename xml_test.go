@@ -43,6 +43,8 @@ var xmldirs = []string{
 	"testdata/libvirt/tests/bhyvexml2xmloutdata",
 	"testdata/libvirt/tests/capabilityschemadata",
 	"testdata/libvirt/tests/cputestdata",
+	"testdata/libvirt/tests/domainbackupxml2xmlin",
+	"testdata/libvirt/tests/domainbackupxml2xmlout",
 	"testdata/libvirt/tests/domaincapsdata",
 	"testdata/libvirt/tests/domainconfdata",
 	"testdata/libvirt/tests/domainschemadata",
@@ -241,6 +243,9 @@ var extraActualNodes = map[string][]string{
 	"testdata/libvirt/tests/vmx2xmldata/esx-in-the-wild-14.xml": []string{
 		"/domain[0]/devices[0]/interface[0]/source[0]",
 	},
+	"testdata/libvirt/tests/domainbackupxml2xmlin/empty.xml": []string{
+		"/domainbackup[0]/@mode",
+	},
 }
 
 var extraExpectNodes = map[string][]string{
@@ -379,6 +384,8 @@ func testRoundTrip(t *testing.T, xml string, filename string) {
 		}
 	} else if strings.HasPrefix(xml, "<domainsnapshot") {
 		doc = &DomainSnapshot{}
+	} else if strings.HasPrefix(xml, "<domainbackup") {
+		doc = &DomainBackup{}
 	} else if strings.HasPrefix(xml, "<domainCapabilities") {
 		doc = &DomainCaps{}
 	} else if strings.HasPrefix(xml, "<disk") {
