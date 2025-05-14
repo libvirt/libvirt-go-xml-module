@@ -46,6 +46,8 @@ var xmldirs = []string{
 	"testdata/libvirt/tests/domainbackupxml2xmlin",
 	"testdata/libvirt/tests/domainbackupxml2xmlout",
 	"testdata/libvirt/tests/domaincapsdata",
+	"testdata/libvirt/tests/qemudomaincheckpointxml2xmlin",
+	"testdata/libvirt/tests/qemudomaincheckpointxml2xmlout",
 	"testdata/libvirt/tests/domainconfdata",
 	"testdata/libvirt/tests/domainschemadata",
 	"testdata/libvirt/tests/genericxml2xmlindata",
@@ -384,6 +386,8 @@ func testRoundTrip(t *testing.T, xml string, filename string) {
 		}
 	} else if strings.HasPrefix(xml, "<domainsnapshot") {
 		doc = &DomainSnapshot{}
+	} else if strings.HasPrefix(xml, "<domaincheckpoint") {
+		doc = &DomainCheckpoint{}
 	} else if strings.HasPrefix(xml, "<domainbackup") {
 		doc = &DomainBackup{}
 	} else if strings.HasPrefix(xml, "<domainCapabilities") {
