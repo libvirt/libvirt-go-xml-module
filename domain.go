@@ -78,6 +78,10 @@ type DomainControllerXenBus struct {
 	MaxEventChannels uint `xml:"maxEventChannels,attr,omitempty"`
 }
 
+type DomainControllerNVME struct {
+	Serial string `xml:"serial,omitempty"`
+}
+
 type DomainControllerDriverIOThreads struct {
 	IOThread []DomainControllerDriverIOThread `xml:"iothread"`
 }
@@ -114,6 +118,7 @@ type DomainController struct {
 	USB          *DomainControllerUSB          `xml:"-"`
 	VirtIOSerial *DomainControllerVirtIOSerial `xml:"-"`
 	XenBus       *DomainControllerXenBus       `xml:"-"`
+	NVME         *DomainControllerNVME         `xml:"-"`
 	ACPI         *DomainDeviceACPI             `xml:"acpi"`
 	Alias        *DomainAlias                  `xml:"alias"`
 	Address      *DomainAddress                `xml:"address"`
@@ -3276,6 +3281,11 @@ type domainControllerXenBus struct {
 	domainController
 }
 
+type domainControllerNVME struct {
+	DomainControllerNVME
+	domainController
+}
+
 func (a *DomainControllerPCITarget) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	marshalUintAttr(&start, "chassisNr", a.ChassisNr, "%d")
 	marshalUintAttr(&start, "chassis", a.Chassis, "%d")
@@ -3392,6 +3402,13 @@ func (a *DomainController) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 			xenbus.DomainControllerXenBus = *a.XenBus
 		}
 		return e.EncodeElement(xenbus, start)
+	} else if a.Type == "nvme" {
+		nvme := domainControllerNVME{}
+		nvme.domainController = domainController(*a)
+		if a.NVME != nil {
+			nvme.DomainControllerNVME = *a.NVME
+		}
+		return e.EncodeElement(nvme, start)
 	} else {
 		gen := domainController(*a)
 		return e.EncodeElement(gen, start)
@@ -3447,6 +3464,15 @@ func (a *DomainController) UnmarshalXML(d *xml.Decoder, start xml.StartElement) 
 		}
 		*a = DomainController(xenbus.domainController)
 		a.XenBus = &xenbus.DomainControllerXenBus
+		return nil
+	} else if typ == "nvme" {
+		var nvme domainControllerNVME
+		err := d.DecodeElement(&nvme, &start)
+		if err != nil {
+			return err
+		}
+		*a = DomainController(nvme.domainController)
+		a.NVME = &nvme.DomainControllerNVME
 		return nil
 	} else {
 		var gen domainController
