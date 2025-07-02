@@ -2043,6 +2043,8 @@ type DomainIOMMUDriver struct {
 	IOTLB          string `xml:"iotlb,attr,omitempty"`
 	AWBits         uint   `xml:"aw_bits,attr,omitempty"`
 	DMATranslation string `xml:"dma_translation,attr,omitempty"`
+	Passthrough    string `xml:"passthrough,attr,omitempty"`
+	XTSup          string `xml:"xtsup,attr,omitempty"`
 }
 
 type DomainNVRAM struct {
