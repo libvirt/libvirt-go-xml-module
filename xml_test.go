@@ -163,6 +163,9 @@ var extraActualNodes = map[string][]string{
 	"testdata/libvirt/tests/qemuxmlconfdata/x86_64-q35-default-models.xml": []string{
 		"/domain[0]/devices[0]/video[0]/model[0]",
 	},
+	"testdata/libvirt/tests/qemuxmlconfdata/launch-security-tdx.xml": []string{
+		"/domain[0]/devices[0]/video[0]/model[0]",
+	},
 	"testdata/libvirt/tests/xlconfigdata/test-fullvirt-ovswitch-tagged.xml": []string{
 		"/domain[0]/devices[0]/interface[0]/virtualport[0]/parameters[0]",
 	},
