@@ -1480,7 +1480,7 @@ type DomainVideoResolution struct {
 }
 
 type DomainVideoModel struct {
-	Type       string                 `xml:"type,attr"`
+	Type       string                 `xml:"type,attr,omitempty"`
 	Heads      uint                   `xml:"heads,attr,omitempty"`
 	Ram        uint                   `xml:"ram,attr,omitempty"`
 	VRam       uint                   `xml:"vram,attr,omitempty"`
