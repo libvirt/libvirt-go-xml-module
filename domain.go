@@ -5063,7 +5063,9 @@ func (a *DomainChardevSource) MarshalXML(e *xml.Encoder, start xml.StartElement)
 	} else if a.SpicePort != nil {
 		return e.EncodeElement(a.SpicePort, start)
 	} else if a.NMDM != nil {
-		return e.EncodeElement(a.NMDM, start)
+		if a.NMDM.Master != "" && a.NMDM.Slave != "" {
+			return e.EncodeElement(a.NMDM, start)
+		}
 	} else if a.QEMUVDAgent != nil {
 		return e.EncodeElement(a.QEMUVDAgent, start)
 	} else if a.DBus != nil {
