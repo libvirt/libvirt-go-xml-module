@@ -3215,6 +3215,7 @@ type Domain struct {
 	ID              *int                   `xml:"id,attr"`
 	Name            string                 `xml:"name,omitempty"`
 	UUID            string                 `xml:"uuid,omitempty"`
+	HWUUID          string                 `xml:"hwuuid,omitempty"`
 	GenID           *DomainGenID           `xml:"genid"`
 	Title           string                 `xml:"title,omitempty"`
 	Description     string                 `xml:"description,omitempty"`
