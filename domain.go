@@ -6910,19 +6910,23 @@ func (a *DomainLaunchSecuritySEV) MarshalXML(e *xml.Encoder, start xml.StartElem
 		e.EncodeToken(policy.End())
 	}
 
-	dhcert := xml.StartElement{
-		Name: xml.Name{Local: "dhCert"},
+	if a.DHCert != "" {
+		dhcert := xml.StartElement{
+			Name: xml.Name{Local: "dhCert"},
+		}
+		e.EncodeToken(dhcert)
+		e.EncodeToken(xml.CharData(fmt.Sprintf("%s", a.DHCert)))
+		e.EncodeToken(dhcert.End())
 	}
-	e.EncodeToken(dhcert)
-	e.EncodeToken(xml.CharData(fmt.Sprintf("%s", a.DHCert)))
-	e.EncodeToken(dhcert.End())
 
-	session := xml.StartElement{
-		Name: xml.Name{Local: "session"},
+	if a.Session != "" {
+		session := xml.StartElement{
+			Name: xml.Name{Local: "session"},
+		}
+		e.EncodeToken(session)
+		e.EncodeToken(xml.CharData(fmt.Sprintf("%s", a.Session)))
+		e.EncodeToken(session.End())
 	}
-	e.EncodeToken(session)
-	e.EncodeToken(xml.CharData(fmt.Sprintf("%s", a.Session)))
-	e.EncodeToken(session.End())
 
 	e.EncodeToken(start.End())
 
@@ -7053,33 +7057,41 @@ func (a *DomainLaunchSecuritySEVSNP) MarshalXML(e *xml.Encoder, start xml.StartE
 		e.EncodeToken(policy.End())
 	}
 
-	gvwo := xml.StartElement{
-		Name: xml.Name{Local: "guestVisibleWorkarounds"},
+	if a.GuestVisibleWorkarounds != "" {
+		gvwo := xml.StartElement{
+			Name: xml.Name{Local: "guestVisibleWorkarounds"},
+		}
+		e.EncodeToken(gvwo)
+		e.EncodeToken(xml.CharData(fmt.Sprintf("%s", a.GuestVisibleWorkarounds)))
+		e.EncodeToken(gvwo.End())
 	}
-	e.EncodeToken(gvwo)
-	e.EncodeToken(xml.CharData(fmt.Sprintf("%s", a.GuestVisibleWorkarounds)))
-	e.EncodeToken(gvwo.End())
 
-	idBlock := xml.StartElement{
-		Name: xml.Name{Local: "idBlock"},
+	if a.IDBlock != "" {
+		idBlock := xml.StartElement{
+			Name: xml.Name{Local: "idBlock"},
+		}
+		e.EncodeToken(idBlock)
+		e.EncodeToken(xml.CharData(fmt.Sprintf("%s", a.IDBlock)))
+		e.EncodeToken(idBlock.End())
 	}
-	e.EncodeToken(idBlock)
-	e.EncodeToken(xml.CharData(fmt.Sprintf("%s", a.IDBlock)))
-	e.EncodeToken(idBlock.End())
 
-	idAuth := xml.StartElement{
-		Name: xml.Name{Local: "idAuth"},
+	if a.IDAuth != "" {
+		idAuth := xml.StartElement{
+			Name: xml.Name{Local: "idAuth"},
+		}
+		e.EncodeToken(idAuth)
+		e.EncodeToken(xml.CharData(fmt.Sprintf("%s", a.IDAuth)))
+		e.EncodeToken(idAuth.End())
 	}
-	e.EncodeToken(idAuth)
-	e.EncodeToken(xml.CharData(fmt.Sprintf("%s", a.IDAuth)))
-	e.EncodeToken(idAuth.End())
 
-	hostData := xml.StartElement{
-		Name: xml.Name{Local: "hostData"},
+	if a.HostData != "" {
+		hostData := xml.StartElement{
+			Name: xml.Name{Local: "hostData"},
+		}
+		e.EncodeToken(hostData)
+		e.EncodeToken(xml.CharData(fmt.Sprintf("%s", a.HostData)))
+		e.EncodeToken(hostData.End())
 	}
-	e.EncodeToken(hostData)
-	e.EncodeToken(xml.CharData(fmt.Sprintf("%s", a.HostData)))
-	e.EncodeToken(hostData.End())
 
 	e.EncodeToken(start.End())
 
