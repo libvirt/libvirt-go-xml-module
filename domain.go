@@ -1101,7 +1101,8 @@ type DomainAlias struct {
 }
 
 type DomainDeviceACPI struct {
-	Index uint `xml:"index,attr,omitempty"`
+	Index   uint   `xml:"index,attr,omitempty"`
+	Nodeset string `xml:"nodeset,attr,omitempty"`
 }
 
 type DomainAddressPCI struct {
