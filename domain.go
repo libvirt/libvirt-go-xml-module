@@ -853,10 +853,12 @@ type DomainInterfaceFilterParam struct {
 }
 
 type DomainInterfaceBackend struct {
-	Type    string `xml:"type,attr,omitempty"`
-	Tap     string `xml:"tap,attr,omitempty"`
-	VHost   string `xml:"vhost,attr,omitempty"`
-	LogFile string `xml:"logFile,attr,omitempty"`
+	Type     string `xml:"type,attr,omitempty"`
+	Tap      string `xml:"tap,attr,omitempty"`
+	VHost    string `xml:"vhost,attr,omitempty"`
+	LogFile  string `xml:"logFile,attr,omitempty"`
+	Hostname string `xml:"hostname,attr,omitempty"`
+	FQDN     string `xml:"fqdn,attr,omitempty"`
 }
 
 type DomainInterfaceTune struct {
