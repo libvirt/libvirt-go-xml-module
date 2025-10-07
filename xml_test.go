@@ -111,6 +111,8 @@ var blacklist = map[string]bool{
 	// udp source in different order
 	"testdata/libvirt/tests/genericxml2xmlindata/chardev-udp.xml":                 true,
 	"testdata/libvirt/tests/genericxml2xmlindata/chardev-udp-multiple-source.xml": true,
+	// example has stripped leading hex digits on SNP policy
+	"testdata/libvirt/tests/qemuxmlconfdata/firmware-auto-efi-sev-snp.xml": true,
 }
 
 var extraActualNodes = map[string][]string{
