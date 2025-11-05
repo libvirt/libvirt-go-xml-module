@@ -315,6 +315,14 @@ type DomainDiskIOThreadQueue struct {
 	ID uint `xml:"id,attr"`
 }
 
+type DomainDiskStatistics struct {
+	Statistic []DomainDiskStatistic `xml:"statistic"`
+}
+
+type DomainDiskStatistic struct {
+	Interval uint `xml:"interval,attr"`
+}
+
 type DomainDiskDriver struct {
 	Name           string                   `xml:"name,attr,omitempty"`
 	Type           string                   `xml:"type,attr,omitempty"`
@@ -337,6 +345,7 @@ type DomainDiskDriver struct {
 	Packed         string                   `xml:"packed,attr,omitempty"`
 	PagePerVQ      string                   `xml:"page_per_vq,attr,omitempty"`
 	MetadataCache  *DomainDiskMetadataCache `xml:"metadata_cache"`
+	Statistics     *DomainDiskStatistics    `xml:"statistics"`
 }
 
 type DomainDiskTarget struct {
