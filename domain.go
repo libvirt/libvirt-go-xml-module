@@ -1362,6 +1362,7 @@ type DomainGraphicVNC struct {
 	Connected     string                  `xml:"connected,attr,omitempty"`
 	PowerControl  string                  `xml:"powerControl,attr,omitempty"`
 	Listen        string                  `xml:"listen,attr,omitempty"`
+	Wait          string                  `xml:"wait,attr,omitempty"`
 	Listeners     []DomainGraphicListener `xml:"listen"`
 }
 
