@@ -3964,13 +3964,137 @@ var domainTestData = []struct {
 			`</domain>`,
 		},
 	},
+	{
+		Object: &Domain{
+			Name: "domain_iommu",
+			Devices: &DomainDeviceList{
+				IOMMU: &DomainIOMMU{
+					Model: "intel-iommu",
+				},
+			},
+		},
+		Expected: []string{
+			`<domain>`,
+			`  <name>domain_iommu</name>`,
+			`  <devices>`,
+			`    <iommu model="intel-iommu"></iommu>`,
+			`  </devices>`,
+			`</domain>`,
+		},
+	},
+	{
+		Object: &Domain{
+			Name: "domain_smmu",
+			Devices: &DomainDeviceList{
+				IOMMUs: []DomainIOMMU{
+					DomainIOMMU{
+						Model: "smmuv3",
+						Driver: &DomainIOMMUDriver{
+							PCIBus: 1,
+						},
+					},
+					DomainIOMMU{
+						Model: "smmuv3",
+						Driver: &DomainIOMMUDriver{
+							PCIBus: 2,
+						},
+					},
+				},
+			},
+		},
+		Expected: []string{
+			`<domain>`,
+			`  <name>domain_smmu</name>`,
+			`  <devices>`,
+			`    <iommu model="smmuv3">`,
+			`      <driver pciBus="1"></driver>`,
+			`    </iommu>`,
+			`    <iommu model="smmuv3">`,
+			`      <driver pciBus="2"></driver>`,
+			`    </iommu>`,
+			`  </devices>`,
+			`</domain>`,
+		},
+	},
+	{
+		Object: &Domain{
+			Name: "domain_smmu",
+			Devices: &DomainDeviceList{
+				IOMMU: &DomainIOMMU{
+					Model: "smmuv3",
+					Driver: &DomainIOMMUDriver{
+						PCIBus: 1,
+					},
+				},
+				IOMMUs: []DomainIOMMU{
+					DomainIOMMU{
+						Model: "smmuv3",
+						Driver: &DomainIOMMUDriver{
+							PCIBus: 1,
+						},
+					},
+					DomainIOMMU{
+						Model: "smmuv3",
+						Driver: &DomainIOMMUDriver{
+							PCIBus: 2,
+						},
+					},
+				},
+			},
+		},
+		Expected: []string{
+			`<domain>`,
+			`  <name>domain_smmu</name>`,
+			`  <devices>`,
+			`    <iommu model="smmuv3">`,
+			`      <driver pciBus="1"></driver>`,
+			`    </iommu>`,
+			`    <iommu model="smmuv3">`,
+			`      <driver pciBus="2"></driver>`,
+			`    </iommu>`,
+			`  </devices>`,
+			`</domain>`,
+		},
+	},
+	{
+		Object: &Domain{
+			Name: "domain_smmu",
+			Devices: &DomainDeviceList{
+				IOMMU: &DomainIOMMU{
+					Model: "intel-iommu",
+					Driver: &DomainIOMMUDriver{
+						PCIBus: 1,
+					},
+				},
+				IOMMUs: []DomainIOMMU{
+					DomainIOMMU{
+						Model: "smmuv3",
+						Driver: &DomainIOMMUDriver{
+							PCIBus: 1,
+						},
+					},
+					DomainIOMMU{
+						Model: "smmuv3",
+						Driver: &DomainIOMMUDriver{
+							PCIBus: 2,
+						},
+					},
+				},
+			},
+		},
+		Expected: []string{},
+	},
 }
 
 func TestDomain(t *testing.T) {
 	for _, test := range domainTestData {
 		doc, err := test.Object.Marshal()
 		if err != nil {
-			t.Fatal(err)
+			if len(test.Expected) == 0 {
+				continue
+			} else {
+				t.Fatal(err)
+			}
 		}
 
 		expect := strings.Join(test.Expected, "\n")

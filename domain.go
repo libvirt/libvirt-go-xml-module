@@ -29,6 +29,7 @@ import (
 	"encoding/xml"
 	"fmt"
 	"io"
+	"reflect"
 	"strconv"
 	"strings"
 )
@@ -2068,6 +2069,7 @@ type DomainIOMMUDriver struct {
 	DMATranslation string `xml:"dma_translation,attr,omitempty"`
 	Passthrough    string `xml:"passthrough,attr,omitempty"`
 	XTSup          string `xml:"xtsup,attr,omitempty"`
+	PCIBus         uint   `xml:"pciBus,attr,omitempty"`
 }
 
 type DomainNVRAM struct {
@@ -2273,7 +2275,8 @@ type DomainDeviceList struct {
 	Panics       []DomainPanic       `xml:"panic"`
 	Shmems       []DomainShmem       `xml:"shmem"`
 	Memorydevs   []DomainMemorydev   `xml:"memory"`
-	IOMMU        *DomainIOMMU        `xml:"iommu"`
+	IOMMU        *DomainIOMMU        `xml:"-"`
+	IOMMUs       []DomainIOMMU       `xml:"iommu"`
 	VSock        *DomainVSock        `xml:"vsock"`
 	Crypto       []DomainCrypto      `xml:"crypto"`
 	PStore       *DomainPStore       `xml:"pstore"`
@@ -7534,5 +7537,34 @@ func (a *DomainNVRam) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error
 		a.NVRam = ""
 	}
 	*a = DomainNVRam(disk)
+	return nil
+}
+
+type domainDeviceList DomainDeviceList
+
+func (a *DomainDeviceList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
+	devs := domainDeviceList(*a)
+	if devs.IOMMU != nil {
+		if len(devs.IOMMUs) != 0 {
+			if !reflect.DeepEqual(*devs.IOMMU, devs.IOMMUs[0]) {
+				return fmt.Errorf("IOMMU field must match first element in IOMMUs list")
+			}
+		} else {
+			devs.IOMMUs = []DomainIOMMU{*devs.IOMMU}
+		}
+	}
+	return e.EncodeElement(devs, start)
+}
+
+func (a *DomainDeviceList) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
+	devs := domainDeviceList(*a)
+	err := d.DecodeElement(&devs, &start)
+	if err != nil {
+		return err
+	}
+	if len(devs.IOMMUs) > 0 {
+		devs.IOMMU = &devs.IOMMUs[0]
+	}
+	*a = DomainDeviceList(devs)
 	return nil
 }
