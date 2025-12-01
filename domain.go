@@ -354,6 +354,7 @@ type DomainDiskTarget struct {
 	Tray         string `xml:"tray,attr,omitempty"`
 	Removable    string `xml:"removable,attr,omitempty"`
 	RotationRate uint   `xml:"rotation_rate,attr,omitempty"`
+	DPOFUA       string `xml:"dpofua,attr,omitempty"`
 }
 
 type DomainDiskEncryption struct {
