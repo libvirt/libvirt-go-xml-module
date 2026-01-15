@@ -513,8 +513,10 @@ func TestRoundTrip(t *testing.T) {
 			t.Fatal(err)
 		}
 
+		count := 0
 		for _, xmlfile := range xmlfiles {
 			if !xmlfile.IsDir() && strings.HasSuffix(xmlfile.Name(), ".xml") {
+				count++
 				fname := xmldir + "/" + xmlfile.Name()
 				_, ok := blacklist[fname]
 				if ok {
@@ -530,5 +532,10 @@ func TestRoundTrip(t *testing.T) {
 				testRoundTrip(t, string(xml), fname)
 			}
 		}
+
+		if count == 0 {
+			t.Fatalf("Directory %s contains no XML files", xmldir)
+		}
+
 	}
 }
