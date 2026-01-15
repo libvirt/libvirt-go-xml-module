@@ -39,8 +39,10 @@ import (
 
 var xmldirs = []string{
 	"testdata/libvirt/tests/bhyveargv2xmldata",
-	"testdata/libvirt/tests/bhyvexml2argvdata",
-	"testdata/libvirt/tests/bhyvexml2xmloutdata",
+	"testdata/libvirt/tests/bhyvexml2argvdata/aarch64",
+	"testdata/libvirt/tests/bhyvexml2argvdata/x86_64",
+	"testdata/libvirt/tests/bhyvexml2xmloutdata/aarch64",
+	"testdata/libvirt/tests/bhyvexml2xmloutdata/x86_64",
 	"testdata/libvirt/tests/capabilityschemadata",
 	"testdata/libvirt/tests/cputestdata",
 	"testdata/libvirt/tests/domainbackupxml2xmlin",
@@ -222,19 +224,19 @@ var extraActualNodes = map[string][]string{
 	"testdata/libvirt/tests/qemudomainsnapshotxml2xmlin/qcow2-metadata-cache.xml": []string{
 		"/domainsnapshot[0]/disks[0]/disk[0]/@type",
 	},
-	"testdata/libvirt/tests/bhyvexml2argvdata/bhyvexml2argv-fs-9p.xml": []string{
+	"testdata/libvirt/tests/bhyvexml2argvdata/x86_64/bhyvexml2argv-fs-9p.xml": []string{
 		"/domain[0]/devices[0]/filesystem[0]/@type",
 	},
-	"testdata/libvirt/tests/bhyvexml2argvdata/bhyvexml2argv-fs-9p-readonly.xml": []string{
+	"testdata/libvirt/tests/bhyvexml2argvdata/x86_64/bhyvexml2argv-fs-9p-readonly.xml": []string{
 		"/domain[0]/devices[0]/filesystem[0]/@type",
 	},
-	"testdata/libvirt/tests/bhyvexml2argvdata/bhyvexml2argv-fs-9p-unsupported-accessmode.xml": []string{
+	"testdata/libvirt/tests/bhyvexml2argvdata/x86_64/bhyvexml2argv-fs-9p-unsupported-accessmode.xml": []string{
 		"/domain[0]/devices[0]/filesystem[0]/@type",
 	},
-	"testdata/libvirt/tests/bhyvexml2argvdata/bhyvexml2argv-fs-9p-unsupported-driver.xml": []string{
+	"testdata/libvirt/tests/bhyvexml2argvdata/x86_64/bhyvexml2argv-fs-9p-unsupported-driver.xml": []string{
 		"/domain[0]/devices[0]/filesystem[0]/@type",
 	},
-	"testdata/libvirt/tests/bhyvexml2argvdata/bhyvexml2argv-console-master-slave-not-specified.xml": []string{
+	"testdata/libvirt/tests/bhyvexml2argvdata/x86_64/bhyvexml2argv-console-master-slave-not-specified.xml": []string{
 		"/domain[0]/devices[0]/console[0]/source[0]",
 	},
 	"testdata/libvirt/tests/qemuxmlconfdata/graphics-dbus-usbredir.xml": []string{
