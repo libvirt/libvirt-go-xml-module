@@ -322,11 +322,21 @@ type DomainDiskIOThreadQueue struct {
 }
 
 type DomainDiskStatistics struct {
-	Statistic []DomainDiskStatistic `xml:"statistic"`
+	Statistic        []DomainDiskStatistic        `xml:"statistic"`
+	LatencyHistogram []DomainDiskLatencyHistogram `xml:"latency-histogram"`
 }
 
 type DomainDiskStatistic struct {
 	Interval uint `xml:"interval,attr"`
+}
+
+type DomainDiskLatencyHistogram struct {
+	Type string                          `xml:"type,attr,omitempty"`
+	Bin  []DomainDiskLatencyHistogramBin `xml:"bin"`
+}
+
+type DomainDiskLatencyHistogramBin struct {
+	Start uint `xml:"start,attr"`
 }
 
 type DomainDiskDriver struct {
