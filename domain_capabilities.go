@@ -49,14 +49,20 @@ type DomainCapsVCPU struct {
 }
 
 type DomainCapsOS struct {
-	Supported string              `xml:"supported,attr"`
-	Loader    *DomainCapsOSLoader `xml:"loader"`
-	Enums     []DomainCapsEnum    `xml:"enum"`
+	Supported        string                        `xml:"supported,attr"`
+	Loader           *DomainCapsOSLoader           `xml:"loader"`
+	FirmwareFeatures *DomainCapsOSFirmwareFeatures `xml:"firmwareFeatures"`
+	Enums            []DomainCapsEnum              `xml:"enum"`
 }
 
 type DomainCapsOSLoader struct {
 	Supported string           `xml:"supported,attr"`
 	Values    []string         `xml:"value"`
+	Enums     []DomainCapsEnum `xml:"enum"`
+}
+
+type DomainCapsOSFirmwareFeatures struct {
+	Supported string           `xml:"supported,attr"`
 	Enums     []DomainCapsEnum `xml:"enum"`
 }
 
