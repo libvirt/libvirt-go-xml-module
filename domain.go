@@ -167,9 +167,10 @@ type DomainDiskSourceTimeout struct {
 type DomainDiskReservationsSource DomainChardevSource
 
 type DomainDiskReservations struct {
-	Enabled string                        `xml:"enabled,attr,omitempty"`
-	Managed string                        `xml:"managed,attr,omitempty"`
-	Source  *DomainDiskReservationsSource `xml:"source"`
+	Enabled   string                        `xml:"enabled,attr,omitempty"`
+	Managed   string                        `xml:"managed,attr,omitempty"`
+	Migration string                        `xml:"migration,attr,omitempty"`
+	Source    *DomainDiskReservationsSource `xml:"source"`
 }
 
 type DomainDiskSource struct {
