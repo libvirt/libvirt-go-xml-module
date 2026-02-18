@@ -59,10 +59,8 @@ var xmldirs = []string{
 	"testdata/libvirt/tests/lxcconf2xmldata",
 	"testdata/libvirt/tests/lxcxml2xmldata",
 	"testdata/libvirt/tests/lxcxml2xmloutdata",
-	"testdata/libvirt/tests/networkxml2confdata",
+	"testdata/libvirt/tests/networkxmlconfdata",
 	"testdata/libvirt/tests/networkxml2firewalldata",
-	"testdata/libvirt/tests/networkxml2xmlin",
-	"testdata/libvirt/tests/networkxml2xmlout",
 	"testdata/libvirt/tests/networkxml2xmlupdatein",
 	"testdata/libvirt/tests/networkxml2xmlupdateout",
 	"testdata/libvirt/tests/nodedevschemadata",
@@ -177,10 +175,19 @@ var extraActualNodes = map[string][]string{
 		"/domain[0]/devices[0]/interface[0]/virtualport[0]/parameters[0]",
 	},
 
-	"testdata/libvirt/tests/networkxml2xmlin/openvswitch-net.xml": []string{
+	"testdata/libvirt/tests/networkxmlconfdata/openvswitch-net.xml": []string{
 		"/network[0]/virtualport[0]/parameters[0]",
 	},
-	"testdata/libvirt/tests/networkxml2xmlout/openvswitch-net.xml": []string{
+	"testdata/libvirt/tests/networkxmlconfdata/openvswitch-net.expect.xml": []string{
+		"/network[0]/virtualport[0]/parameters[0]",
+	},
+	"testdata/libvirt/tests/networkxmlconfdata/openvswitch-net-modified.xml": []string{
+		"/network[0]/virtualport[0]/parameters[0]",
+	},
+	"testdata/libvirt/tests/networkxmlconfdata/openvswitch-net-more-portgroups.xml": []string{
+		"/network[0]/virtualport[0]/parameters[0]",
+	},
+	"testdata/libvirt/tests/networkxmlconfdata/openvswitch-net-without-alice.xml": []string{
 		"/network[0]/virtualport[0]/parameters[0]",
 	},
 	"testdata/libvirt/tests/networkxml2xmlupdateout/openvswitch-net-modified.xml": []string{
