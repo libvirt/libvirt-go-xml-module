@@ -2078,15 +2078,22 @@ type DomainIOMMU struct {
 }
 
 type DomainIOMMUDriver struct {
-	IntRemap       string `xml:"intremap,attr,omitempty"`
-	CachingMode    string `xml:"caching_mode,attr,omitempty"`
-	EIM            string `xml:"eim,attr,omitempty"`
-	IOTLB          string `xml:"iotlb,attr,omitempty"`
-	AWBits         uint   `xml:"aw_bits,attr,omitempty"`
-	DMATranslation string `xml:"dma_translation,attr,omitempty"`
-	Passthrough    string `xml:"passthrough,attr,omitempty"`
-	XTSup          string `xml:"xtsup,attr,omitempty"`
-	PCIBus         uint   `xml:"pciBus,attr,omitempty"`
+	IntRemap       string                    `xml:"intremap,attr,omitempty"`
+	CachingMode    string                    `xml:"caching_mode,attr,omitempty"`
+	EIM            string                    `xml:"eim,attr,omitempty"`
+	IOTLB          string                    `xml:"iotlb,attr,omitempty"`
+	AWBits         uint                      `xml:"aw_bits,attr,omitempty"`
+	DMATranslation string                    `xml:"dma_translation,attr,omitempty"`
+	Passthrough    string                    `xml:"passthrough,attr,omitempty"`
+	XTSup          string                    `xml:"xtsup,attr,omitempty"`
+	PCIBus         uint                      `xml:"pciBus,attr,omitempty"`
+	Granule        *DomainIOMMUDriverGranule `xml:"granule"`
+}
+
+type DomainIOMMUDriverGranule struct {
+	Size uint   `xml:"size,attr,omitempty"`
+	Unit string `xml:"unit,attr,omitempty"`
+	Mode string `xml:"mode,attr,omitempty"`
 }
 
 type DomainNVRAM struct {
