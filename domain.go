@@ -1887,8 +1887,9 @@ type DomainHostdevSubsysPCISource struct {
 }
 
 type DomainHostdevSubsysPCIDriver struct {
-	Name  string `xml:"name,attr,omitempty"`
-	Model string `xml:"model,attr,omitempty"`
+	Name    string `xml:"name,attr,omitempty"`
+	Model   string `xml:"model,attr,omitempty"`
+	IommuFD string `xml:"iommufd,attr,omitempty"`
 }
 
 type DomainHostdevSubsysPCI struct {
