@@ -2383,6 +2383,11 @@ type DomainNVRam struct {
 	TemplateFormat string            `xml:"templateFormat,attr,omitempty"`
 }
 
+type DomainVarStore struct {
+	Path     string `xml:"path,attr,omitempty"`
+	Template string `xml:"template,attr,omitempty"`
+}
+
 type DomainBootDevice struct {
 	Dev string `xml:"dev,attr"`
 }
@@ -2494,6 +2499,7 @@ type DomainOS struct {
 	InitGroup    string                `xml:"initgroup,omitempty"`
 	Loader       *DomainLoader         `xml:"loader"`
 	NVRam        *DomainNVRam          `xml:"nvram"`
+	VarStore     *DomainVarStore       `xml:"varstore"`
 	Kernel       string                `xml:"kernel,omitempty"`
 	Initrd       string                `xml:"initrd,omitempty"`
 	Cmdline      string                `xml:"cmdline,omitempty"`
