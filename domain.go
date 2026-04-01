@@ -923,7 +923,7 @@ type DomainInterfaceIP struct {
 
 type DomainInterfaceRoute struct {
 	Family  string `xml:"family,attr,omitempty"`
-	Address string `xml:"address,attr"`
+	Address string `xml:"address,attr,omitempty"`
 	Netmask string `xml:"netmask,attr,omitempty"`
 	Prefix  uint   `xml:"prefix,attr,omitempty"`
 	Gateway string `xml:"gateway,attr"`
