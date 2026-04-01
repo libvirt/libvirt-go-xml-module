@@ -2521,6 +2521,11 @@ type DomainResourceFibreChannel struct {
 	AppID string `xml:"appid,attr"`
 }
 
+type DomainIOMMUFD struct {
+	Enabled string `xml:"enabled,attr"`
+	FDGroup string `xml:"fdgroup,attr,omitempty"`
+}
+
 type DomainVCPU struct {
 	Placement string `xml:"placement,attr,omitempty"`
 	CPUSet    string `xml:"cpuset,attr,omitempty"`
@@ -3289,6 +3294,7 @@ type Domain struct {
 	DefaultIOThread *DomainDefaultIOThread `xml:"defaultiothread"`
 	CPUTune         *DomainCPUTune         `xml:"cputune"`
 	NUMATune        *DomainNUMATune        `xml:"numatune"`
+	IOMMUFD         *DomainIOMMUFD         `xml:"iommufd"`
 	Resource        *DomainResource        `xml:"resource"`
 	SysInfo         []DomainSysInfo        `xml:"sysinfo"`
 	Bootloader      string                 `xml:"bootloader,omitempty"`
