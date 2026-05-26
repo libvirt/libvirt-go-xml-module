@@ -3024,6 +3024,16 @@ type DomainCPUMemoryTuneMonitor struct {
 	VCPUs string `xml:"vcpus,attr,omitempty"`
 }
 
+type DomainCPUEnergyTuneMonitor struct {
+	VCPUs string `xml:"vcpus,attr"`
+}
+
+type DomainCPUEnergyTune struct {
+	VCPUs   string                       `xml:"vcpus,attr"`
+	ID      string                       `xml:"id,attr,omitempty"`
+	Monitor []DomainCPUEnergyTuneMonitor `xml:"monitor"`
+}
+
 type DomainCPUTune struct {
 	Shares         *DomainCPUTuneShares         `xml:"shares"`
 	Period         *DomainCPUTunePeriod         `xml:"period"`
@@ -3042,6 +3052,7 @@ type DomainCPUTune struct {
 	IOThreadSched  []DomainCPUTuneIOThreadSched `xml:"iothreadsched"`
 	CacheTune      []DomainCPUCacheTune         `xml:"cachetune"`
 	MemoryTune     []DomainCPUMemoryTune        `xml:"memorytune"`
+	EnergyTune     []DomainCPUEnergyTune        `xml:"energytune"`
 }
 
 type DomainQEMUCommandlineArg struct {
