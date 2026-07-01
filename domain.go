@@ -1520,6 +1520,7 @@ type DomainVideoModel struct {
 	Primary    string                 `xml:"primary,attr,omitempty"`
 	Blob       string                 `xml:"blob,attr,omitempty"`
 	EDID       string                 `xml:"edid,attr,omitempty"`
+	Device     string                 `xml:"device,attr,omitempty"`
 	Accel      *DomainVideoAccel      `xml:"acceleration"`
 	Resolution *DomainVideoResolution `xml:"resolution"`
 }
