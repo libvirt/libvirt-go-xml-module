@@ -133,6 +133,10 @@ var redirfilterClass uint = 0x08
 var redirfilterProduct uint = 0x2007
 var redirfilterVendor uint = 0x15e1
 
+var sevsnpcbitpos uint = 51
+var sevsnpreducedphysbits uint = 1
+var sevsnppolicy uint64 = 0x30000
+
 var domainTestData = []struct {
 	Object   Document
 	Expected []string
@@ -2492,6 +2496,29 @@ var domainTestData = []struct {
 			`    <memnode cellid="1" mode="strict" nodeset="3"></memnode>`,
 
 			`  </numatune>`,
+			`</domain>`,
+		},
+	},
+	{
+		Object: &Domain{
+			Type: "kvm",
+			Name: "test",
+			LaunchSecurity: &DomainLaunchSecurity{
+				SEVSNP: &DomainLaunchSecuritySEVSNP{
+					CBitPos:         &sevsnpcbitpos,
+					ReducedPhysBits: &sevsnpreducedphysbits,
+					Policy:          &sevsnppolicy,
+				},
+			},
+		},
+		Expected: []string{
+			`<domain type="kvm">`,
+			`  <name>test</name>`,
+			`  <launchSecurity type="sev-snp">`,
+			`    <cbitpos>51</cbitpos>`,
+			`    <reducedPhysBits>1</reducedPhysBits>`,
+			`    <policy>0x00030000</policy>`,
+			`  </launchSecurity>`,
 			`</domain>`,
 		},
 	},
