@@ -3211,6 +3211,7 @@ type DomainIOThreadPoll struct {
 	Max    *uint `xml:"max,attr"`
 	Grow   *uint `xml:"grow,attr"`
 	Shrink *uint `xml:"shrink,attr"`
+	Weight *uint `xml:"weight,attr"`
 }
 
 type DomainIOThread struct {
