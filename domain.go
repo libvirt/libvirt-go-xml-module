@@ -3016,7 +3016,7 @@ type DomainCPUCacheTuneMonitor struct {
 }
 
 type DomainCPUMemoryTune struct {
-	VCPUs   string                       `xml:"vcpus,attr"`
+	VCPUs   string                       `xml:"vcpus,attr,omitempty"`
 	Nodes   []DomainCPUMemoryTuneNode    `xml:"node"`
 	Monitor []DomainCPUMemoryTuneMonitor `xml:"monitor"`
 }
@@ -3032,11 +3032,11 @@ type DomainCPUMemoryTuneMonitor struct {
 }
 
 type DomainCPUEnergyTuneMonitor struct {
-	VCPUs string `xml:"vcpus,attr"`
+	VCPUs string `xml:"vcpus,attr,omitempty"`
 }
 
 type DomainCPUEnergyTune struct {
-	VCPUs   string                       `xml:"vcpus,attr"`
+	VCPUs   string                       `xml:"vcpus,attr,omitempty"`
 	ID      string                       `xml:"id,attr,omitempty"`
 	Monitor []DomainCPUEnergyTuneMonitor `xml:"monitor"`
 }
