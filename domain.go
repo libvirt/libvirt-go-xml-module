@@ -3327,6 +3327,7 @@ type Domain struct {
 	OnPoweroff      string                 `xml:"on_poweroff,omitempty"`
 	OnReboot        string                 `xml:"on_reboot,omitempty"`
 	OnCrash         string                 `xml:"on_crash,omitempty"`
+	OnLockFailure   string                 `xml:"on_lockfailure,omitempty"`
 	PM              *DomainPM              `xml:"pm"`
 	Perf            *DomainPerf            `xml:"perf"`
 	Devices         *DomainDeviceList      `xml:"devices"`
