@@ -2438,7 +2438,7 @@ type DomainSysInfoSMBIOS struct {
 	BaseBoard  []DomainSysInfoBaseBoard `xml:"baseBoard"`
 	Chassis    *DomainSysInfoChassis    `xml:"chassis"`
 	Processor  []DomainSysInfoProcessor `xml:"processor"`
-	Memory     []DomainSysInfoMemory    `xml:"memory"`
+	Memory     []DomainSysInfoMemory    `xml:"memory_device"`
 	OEMStrings *DomainSysInfoOEMStrings `xml:"oemStrings"`
 }
 
