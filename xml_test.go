@@ -84,6 +84,7 @@ var xmldirs = []string{
 	"testdata/libvirt/tests/storagevolschemadata",
 	"testdata/libvirt/tests/storagevolxml2xmlin",
 	"testdata/libvirt/tests/storagevolxml2xmlout",
+	"testdata/libvirt/tests/sysinfodata",
 	"testdata/libvirt/tests/vircaps2xmldata",
 	"testdata/libvirt/tests/virnetworkportxml2xmldata",
 	"testdata/libvirt/tests/virnwfilterbindingxml2xmldata",
@@ -377,6 +378,8 @@ func testRoundTrip(t *testing.T, xml string, filename string) {
 		doc = &StorageVolume{}
 	} else if strings.HasPrefix(xml, "<pool") {
 		doc = &StoragePool{}
+	} else if strings.HasPrefix(xml, "<sysinfo") {
+		doc = &SysInfo{}
 	} else if strings.HasPrefix(xml, "<cpuTest") || strings.HasPrefix(xml, "<cpudata") {
 		// Not a public schema
 		return
